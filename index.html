@@ -1,0 +1,2570 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VIRTUAL2 // AUDIO KIT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Chakra+Petch:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============ RESET & BASE ============ */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --green-dark: #060a18;
+        --green-bg: #0a1020;
+        --green-panel: #0e1830;
+        --green-mid: #142040;
+        --green-border: #1e3a6e;
+        --green-accent: #a0ccee;
+        --green-bright: #d4eaff;
+        --green-glow: #88bbee;
+        --green-text: #c0d8f0;
+        --green-dim: #4a6a90;
+        --yellow-highlight: #e0f0ff;
+        --yellow-bg: #b8d8f8;
+        --blue-accent: #90c0e8;
+        --blue-bright: #c8e0ff;
+        --blue-glow: #5588bb;
+        --chrome: #d8e4f0;
+        --black: #040810;
+        --font-display: "Orbitron", sans-serif;
+        --font-mono: "Share Tech Mono", monospace;
+        --font-ui: "Chakra Petch", sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--black);
+        color: var(--green-text);
+        font-family: var(--font-ui);
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* ============ BACKGROUND CANVAS ============ */
+      #bgCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* ============ FILM GRAIN OVERLAY ============ */
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: 51;
+        pointer-events: none;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 200px;
+        animation: grain-shift 0.5s steps(4) infinite;
+      }
+
+      @keyframes grain-shift {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(-2px, 1px);
+        }
+        50% {
+          transform: translate(1px, -1px);
+        }
+        75% {
+          transform: translate(-1px, 2px);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+
+      /* ============ SCANLINES ============ */
+      .scanlines {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.04) 2px,
+          rgba(0, 0, 0, 0.04) 4px
+        );
+      }
+
+      /* ============ ROTATED SIDE TEXT ============ */
+      .side-text {
+        position: fixed;
+        z-index: 52;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+
+      .side-text--left {
+        left: 12px;
+        top: 50%;
+        transform: rotate(-90deg) translateX(-50%);
+        transform-origin: left center;
+        color: rgba(68, 136, 204, 0.25);
+      }
+
+      .side-text--right {
+        right: 12px;
+        top: 50%;
+        transform: rotate(90deg) translateX(50%);
+        transform-origin: right center;
+        color: rgba(100, 180, 255, 0.2);
+      }
+
+      /* ============ STAR DECORATIONS ============ */
+      .stars {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .star {
+        position: absolute;
+        color: var(--green-bright);
+        font-size: 10px;
+        opacity: 0;
+        animation: star-twinkle 3s ease-in-out infinite;
+      }
+
+      @keyframes star-twinkle {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0.5) rotate(0deg);
+        }
+        50% {
+          opacity: 0.6;
+          transform: scale(1) rotate(180deg);
+        }
+      }
+
+      /* ============ HUD TOP BAR ============ */
+      .hud-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 44px;
+        background: linear-gradient(
+          180deg,
+          rgba(8, 16, 32, 0.95) 0%,
+          rgba(8, 14, 28, 0.85) 100%
+        );
+        border-bottom: 1px solid var(--green-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        z-index: 100;
+        backdrop-filter: blur(8px);
+      }
+
+      .hud-bar__brand {
+        font-family: var(--font-display);
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--green-bright);
+        letter-spacing: 3px;
+        text-shadow: 0 0 12px rgba(68, 170, 255, 0.4);
+      }
+
+      .hud-bar__ticks {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .hud-bar__tick {
+        width: 3px;
+        height: 14px;
+        background: var(--green-dim);
+        border-radius: 1px;
+      }
+
+      .hud-bar__tick--lit {
+        background: var(--green-bright);
+        box-shadow: 0 0 8px var(--green-glow);
+      }
+
+      .hud-bar__tick--blue {
+        background: var(--blue-bright);
+        box-shadow: 0 0 8px var(--blue-glow);
+      }
+
+      .hud-bar__coords {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--green-dim);
+        letter-spacing: 1px;
+      }
+
+      /* ============ MAIN LAYOUT ============ */
+      .page {
+        position: relative;
+        z-index: 2;
+        padding-top: 44px;
+      }
+
+      /* ============ HERO ============ */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 24px 40px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero > * {
+        position: relative;
+        z-index: 2;
+      }
+
+      /* ---- Radial Energy Burst (behind disc) ---- */
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 800px;
+        height: 800px;
+        transform: translate(-50%, -55%);
+        z-index: 1;
+        background: radial-gradient(
+            ellipse at center,
+            rgba(68, 136, 204, 0.08) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at center,
+            rgba(68, 170, 255, 0.05) 0%,
+            transparent 40%
+          );
+        pointer-events: none;
+        animation: burst-pulse 4s ease-in-out infinite;
+      }
+
+      @keyframes burst-pulse {
+        0%,
+        100% {
+          opacity: 0.6;
+          transform: translate(-50%, -55%) scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: translate(-50%, -55%) scale(1.08);
+        }
+      }
+
+      /* ---- Lens Flare ---- */
+      .lens-flare {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 4px;
+        pointer-events: none;
+        z-index: 3;
+      }
+
+      .lens-flare::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(102, 187, 255, 0) 15%,
+          rgba(102, 187, 255, 0.15) 30%,
+          rgba(255, 255, 255, 0.5) 48%,
+          rgba(255, 255, 255, 0.8) 50%,
+          rgba(255, 255, 255, 0.5) 52%,
+          rgba(102, 187, 255, 0.15) 70%,
+          rgba(102, 187, 255, 0) 85%,
+          transparent 100%
+        );
+        filter: blur(1px);
+      }
+
+      .lens-flare::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -8px;
+        height: 20px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          transparent 20%,
+          rgba(68, 170, 255, 0.04) 35%,
+          rgba(255, 255, 255, 0.12) 49%,
+          rgba(255, 255, 255, 0.15) 50%,
+          rgba(255, 255, 255, 0.12) 51%,
+          rgba(68, 136, 204, 0.04) 65%,
+          transparent 80%,
+          transparent 100%
+        );
+        filter: blur(6px);
+      }
+
+      /* ---- 2D CD Disc ---- */
+      .disc-container {
+        position: relative;
+        width: 780px;
+        height: 400px;
+        padding-top: 80px;
+        margin-bottom: -40px;
+        z-index: 3;
+        pointer-events: none;
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 100%);
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 100%);
+      }
+
+      .cd-disc {
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        position: relative;
+        margin: 0 auto;
+        background: conic-gradient(
+            from 0deg,
+            rgba(160, 200, 240, 0.15) 0deg,
+            rgba(100, 160, 220, 0.05) 30deg,
+            rgba(180, 210, 250, 0.2) 60deg,
+            rgba(90, 140, 200, 0.05) 90deg,
+            rgba(200, 220, 255, 0.18) 120deg,
+            rgba(100, 160, 220, 0.05) 150deg,
+            rgba(160, 200, 240, 0.15) 180deg,
+            rgba(100, 160, 220, 0.05) 210deg,
+            rgba(180, 210, 250, 0.2) 240deg,
+            rgba(90, 140, 200, 0.05) 270deg,
+            rgba(200, 220, 255, 0.18) 300deg,
+            rgba(100, 160, 220, 0.05) 330deg,
+            rgba(160, 200, 240, 0.15) 360deg
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            transparent 14%,
+            #1a2a4a 14.5%,
+            #0e1830 22%,
+            #1e3a6e 23%,
+            #88bbee 24%,
+            #6699cc 30%,
+            #4a7aaa 50%,
+            #88aacc 70%,
+            #a0c0dd 85%,
+            #6688aa 95%,
+            #3a5a7a 100%
+          );
+        box-shadow:
+          0 0 40px rgba(100, 160, 220, 0.3),
+          0 0 80px rgba(80, 140, 200, 0.15),
+          inset 0 0 30px rgba(100, 160, 220, 0.1);
+        animation: cd-spin 8s linear infinite;
+      }
+
+      /* Center hole */
+      .cd-disc::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 14%;
+        height: 14%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: var(--black);
+        box-shadow:
+          0 0 4px rgba(0, 0, 0, 0.8),
+          0 0 1px 1px rgba(100, 160, 220, 0.3);
+        z-index: 2;
+      }
+
+      /* Groove rings */
+      .cd-disc::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          transparent 14%,
+          transparent 23%,
+          rgba(255, 255, 255, 0.04) 23.5%,
+          transparent 24%,
+          transparent 33%,
+          rgba(255, 255, 255, 0.03) 33.5%,
+          transparent 34%,
+          transparent 44%,
+          rgba(255, 255, 255, 0.03) 44.5%,
+          transparent 45%,
+          transparent 55%,
+          rgba(255, 255, 255, 0.03) 55.5%,
+          transparent 56%,
+          transparent 66%,
+          rgba(255, 255, 255, 0.03) 66.5%,
+          transparent 67%,
+          transparent 77%,
+          rgba(255, 255, 255, 0.03) 77.5%,
+          transparent 78%,
+          transparent 88%,
+          rgba(255, 255, 255, 0.03) 88.5%,
+          transparent 89%
+        );
+        z-index: 1;
+      }
+
+      /* Iridescent sheen overlay */
+      .cd-sheen {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: conic-gradient(
+          from 45deg,
+          rgba(255, 100, 100, 0.08),
+          rgba(255, 200, 50, 0.08),
+          rgba(100, 255, 100, 0.08),
+          rgba(50, 200, 255, 0.08),
+          rgba(150, 100, 255, 0.08),
+          rgba(255, 100, 150, 0.08),
+          rgba(255, 100, 100, 0.08)
+        );
+        mix-blend-mode: screen;
+        animation: cd-sheen-shift 6s linear infinite;
+      }
+
+      @keyframes cd-spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes cd-sheen-shift {
+        from {
+          transform: rotate(360deg);
+        }
+        to {
+          transform: rotate(0deg);
+        }
+      }
+
+      /* ---- Title ---- */
+      .hero-title {
+        font-family: var(--font-display);
+        font-size: clamp(32px, 6vw, 64px);
+        font-weight: 900;
+        color: transparent;
+        text-align: center;
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        position: relative;
+        -webkit-text-stroke: 1.5px var(--green-bright);
+        text-shadow: 0 0 40px rgba(68, 170, 255, 0.2);
+        margin-bottom: 4px;
+      }
+
+      /* Filled duplicate for glow */
+      .hero-title span {
+        position: absolute;
+        inset: 0;
+        color: var(--green-bright);
+        -webkit-text-stroke: 0;
+        opacity: 0.3;
+        filter: blur(8px);
+      }
+
+      .hero-subtitle {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--blue-accent);
+        text-align: center;
+        letter-spacing: 6px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+      }
+
+      .hero-tagline {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--green-dim);
+        text-align: center;
+        letter-spacing: 3px;
+        margin-bottom: 40px;
+        max-width: 400px;
+        line-height: 1.8;
+      }
+
+      /* ============ XBOX-STYLE PANEL ============ */
+      .xbox-panel {
+        background: linear-gradient(
+          135deg,
+          rgba(14, 24, 48, 0.92) 0%,
+          rgba(10, 18, 36, 0.95) 100%
+        );
+        border: 2px solid var(--green-border);
+        border-radius: 4px;
+        position: relative;
+        overflow: visible;
+      }
+
+      .xbox-panel::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 20px;
+        right: 20px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--green-bright),
+          transparent
+        );
+        opacity: 0.6;
+      }
+
+      .xbox-panel::after {
+        content: "";
+        position: absolute;
+        inset: 3px;
+        border: 1px solid rgba(30, 60, 120, 0.3);
+        border-radius: 2px;
+        pointer-events: none;
+      }
+
+      /* ============ STATS ROW ============ */
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3px;
+      }
+
+      .stat-box {
+        background: rgba(10, 18, 36, 0.8);
+        border: 1px solid rgba(30, 60, 120, 0.2);
+        padding: 16px 12px;
+        text-align: center;
+        position: relative;
+      }
+
+      .stat-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 1px;
+        background: var(--blue-accent);
+        opacity: 0.4;
+      }
+
+      .stat-box__val {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--green-bright);
+        text-shadow: 0 0 8px rgba(68, 170, 255, 0.3);
+      }
+
+      .stat-box__label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--green-dim);
+        letter-spacing: 2px;
+        margin-top: 4px;
+        text-transform: uppercase;
+      }
+
+      /* ============ CTA BUTTON ============ */
+      .cta-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        padding: 30px 20px;
+      }
+
+      .xbox-btn {
+        font-family: var(--font-display);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 14px 36px;
+        border: 2px solid var(--green-bright);
+        background: transparent;
+        color: var(--green-bright);
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s;
+        text-shadow: 0 0 8px rgba(68, 170, 255, 0.3);
+      }
+
+      .xbox-btn::before {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border: 1px solid rgba(68, 170, 255, 0.1);
+        pointer-events: none;
+        transition: border-color 0.2s;
+      }
+
+      .xbox-btn:hover {
+        background: var(--yellow-highlight);
+        color: var(--black);
+        border-color: var(--yellow-highlight);
+        text-shadow: none;
+        box-shadow: 0 0 20px rgba(100, 200, 255, 0.3);
+      }
+
+      .xbox-btn:hover::before {
+        border-color: rgba(100, 200, 255, 0.2);
+      }
+
+      .xbox-btn--primary {
+        background: var(--green-bright);
+        color: var(--black);
+        text-shadow: none;
+      }
+
+      .xbox-btn--primary:hover {
+        background: var(--yellow-highlight);
+        border-color: var(--yellow-highlight);
+        box-shadow: 0 0 30px rgba(100, 200, 255, 0.4);
+      }
+
+      /* ============ MAIN DASHBOARD ============ */
+      .dashboard {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 20px;
+        padding: 0 24px 80px;
+      }
+
+      /* ============ LEFT SIDEBAR ============ */
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .sidebar__header {
+        background: linear-gradient(
+          90deg,
+          var(--green-mid),
+          var(--green-panel)
+        );
+        border: 1px solid var(--green-border);
+        padding: 14px 16px;
+        border-radius: 3px;
+        position: relative;
+      }
+
+      .sidebar__header::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        bottom: 8px;
+        width: 3px;
+        background: var(--green-bright);
+        box-shadow: 0 0 8px var(--green-glow);
+      }
+
+      .sidebar__label {
+        font-family: var(--font-display);
+        font-size: 11px;
+        color: var(--green-bright);
+        letter-spacing: 3px;
+        margin-bottom: 4px;
+      }
+
+      .sidebar__value {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--green-dim);
+        letter-spacing: 1px;
+      }
+
+      /* Info Box */
+      .info-box {
+        padding: 16px;
+      }
+
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(30, 60, 120, 0.3);
+        font-family: var(--font-mono);
+        font-size: 11px;
+      }
+
+      .info-row:last-child {
+        border-bottom: none;
+      }
+
+      .info-row__key {
+        color: var(--green-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .info-row__val {
+        color: var(--green-accent);
+      }
+
+      /* Status */
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--green-accent);
+        letter-spacing: 2px;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green-bright);
+        box-shadow: 0 0 8px var(--green-glow);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      /* ============ CIRCUIT TRACE DECORATION ============ */
+      .circuit-trace {
+        position: relative;
+        padding: 12px 16px;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        color: rgba(68, 136, 204, 0.3);
+        letter-spacing: 2px;
+        line-height: 1.8;
+        border-top: 1px solid rgba(68, 136, 204, 0.1);
+      }
+
+      .circuit-trace::before {
+        content: "";
+        position: absolute;
+        left: 16px;
+        top: 0;
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(
+          180deg,
+          rgba(68, 136, 204, 0.2),
+          transparent
+        );
+      }
+
+      .circuit-trace .node {
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--blue-accent);
+        opacity: 0.4;
+        margin: 0 4px;
+        vertical-align: middle;
+      }
+
+      /* ============ MENU LIST (Xbox style) ============ */
+      .xbox-menu {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .xbox-menu__item {
+        padding: 12px 18px;
+        font-family: var(--font-ui);
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--green-text);
+        background: rgba(14, 24, 48, 0.6);
+        border: 1px solid rgba(30, 60, 120, 0.2);
+        border-left: 3px solid transparent;
+        cursor: pointer;
+        transition: all 0.15s;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        position: relative;
+      }
+
+      .xbox-menu__item:hover {
+        background: rgba(30, 60, 120, 0.3);
+        border-left-color: var(--green-accent);
+        color: #c0d8ff;
+      }
+
+      .xbox-menu__item--active {
+        background: var(--yellow-highlight) !important;
+        color: var(--black) !important;
+        border-left-color: var(--yellow-highlight) !important;
+        font-weight: 700;
+      }
+
+      .xbox-menu__item--active::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--yellow-bg);
+      }
+
+      /* ============ MAIN CONTENT PANEL ============ */
+      .content-area {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .panel-header {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--green-bright);
+        letter-spacing: 4px;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--green-border);
+        text-transform: uppercase;
+        text-shadow: 0 0 12px rgba(68, 170, 255, 0.3);
+        position: relative;
+      }
+
+      .panel-header::after {
+        content: "";
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--blue-bright);
+        box-shadow: 0 0 8px var(--blue-glow);
+        animation: pulse 2.5s infinite;
+      }
+
+      /* ============ SAMPLE LIST ============ */
+      .sample-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 8px;
+      }
+
+      .sample-item {
+        display: grid;
+        grid-template-columns: 50px 1fr auto auto;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 16px;
+        background: rgba(10, 18, 36, 0.7);
+        border: 1px solid rgba(30, 60, 120, 0.15);
+        border-radius: 2px;
+        cursor: pointer;
+        transition: all 0.15s;
+        position: relative;
+      }
+
+      .sample-item:hover {
+        background: rgba(30, 60, 120, 0.25);
+        border-color: var(--green-accent);
+      }
+
+      .sample-item--playing {
+        background: rgba(30, 60, 120, 0.35) !important;
+        border-color: var(--green-bright) !important;
+      }
+
+      .sample-item--playing::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--green-bright);
+        box-shadow: 0 0 6px var(--green-glow);
+      }
+
+      .sample-item__idx {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--green-dim);
+        letter-spacing: 2px;
+      }
+
+      .sample-item__name {
+        font-family: var(--font-ui);
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--green-text);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .sample-item__waveform {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        height: 24px;
+      }
+
+      .sample-item__waveform span {
+        width: 3px;
+        background: var(--green-accent);
+        border-radius: 1px;
+        transition: height 0.1s;
+      }
+
+      .sample-item--playing .sample-item__waveform span {
+        background: var(--green-bright);
+        box-shadow: 0 0 4px var(--green-glow);
+        animation: bar-bounce 0.6s ease-in-out infinite alternate;
+      }
+
+      @keyframes bar-bounce {
+        0% {
+          transform: scaleY(0.4);
+        }
+        100% {
+          transform: scaleY(1);
+        }
+      }
+
+      .sample-item__dur {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--green-dim);
+        min-width: 40px;
+        text-align: right;
+      }
+
+      /* ============ DESCRIPTION PANEL ============ */
+      .desc-panel {
+        padding: 20px;
+      }
+
+      .desc-panel__title {
+        font-family: var(--font-display);
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--green-bright);
+        letter-spacing: 3px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+      }
+
+      .desc-panel__text {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--green-dim);
+        line-height: 1.7;
+        letter-spacing: 0.5px;
+      }
+
+      .desc-panel__text strong {
+        color: var(--green-accent);
+      }
+
+      /* ============ FEATURE GRID (Hypertrance style) ============ */
+      .features {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 60px 24px 40px;
+      }
+
+      .features__title {
+        font-family: var(--font-display);
+        font-size: clamp(18px, 3vw, 28px);
+        font-weight: 900;
+        color: var(--green-bright);
+        text-align: center;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .features__sub {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--green-dim);
+        text-align: center;
+        letter-spacing: 3px;
+        margin-bottom: 40px;
+      }
+
+      .features__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+      }
+
+      .feature-card {
+        background: linear-gradient(
+          135deg,
+          rgba(14, 24, 48, 0.85),
+          rgba(10, 18, 36, 0.9)
+        );
+        border: 1px solid var(--green-border);
+        border-radius: 4px;
+        padding: 24px 20px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+      }
+
+      .feature-card:hover {
+        border-color: var(--green-accent);
+        transform: translateY(-2px);
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--blue-accent),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+
+      .feature-card:hover::before {
+        opacity: 0.6;
+      }
+
+      .feature-card__icon {
+        font-family: var(--font-display);
+        font-size: 28px;
+        font-weight: 900;
+        color: var(--green-bright);
+        margin-bottom: 12px;
+        text-shadow: 0 0 20px rgba(68, 170, 255, 0.2);
+      }
+
+      .feature-card__name {
+        font-family: var(--font-display);
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--green-bright);
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .feature-card__desc {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--green-dim);
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+      }
+
+      /* ============ TESTIMONIALS ============ */
+      .testimonials {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 24px 60px;
+      }
+
+      .testimonials__title {
+        font-family: var(--font-display);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--green-bright);
+        text-align: center;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        margin-bottom: 32px;
+      }
+
+      .testimonials__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 12px;
+      }
+
+      .testimonial {
+        background: rgba(14, 24, 48, 0.6);
+        border: 1px solid rgba(30, 60, 120, 0.2);
+        border-radius: 4px;
+        padding: 20px;
+        position: relative;
+      }
+
+      .testimonial__quote {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--green-text);
+        line-height: 1.7;
+        margin-bottom: 12px;
+        font-style: italic;
+      }
+
+      .testimonial__author {
+        font-family: var(--font-display);
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--green-accent);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .testimonial__role {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        color: var(--green-dim);
+        letter-spacing: 1px;
+      }
+
+      /* ============ FULLWIDTH DIVIDER ============ */
+      .divider-section {
+        width: 100%;
+        padding: 80px 24px;
+        text-align: center;
+        position: relative;
+      }
+
+      .divider-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(68, 136, 204, 0.06) 0%,
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+
+      .divider__text {
+        font-family: var(--font-display);
+        font-size: clamp(24px, 5vw, 52px);
+        font-weight: 900;
+        color: transparent;
+        -webkit-text-stroke: 1px var(--green-bright);
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        position: relative;
+      }
+
+      .divider__sub {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--green-dim);
+        letter-spacing: 4px;
+        margin-top: 12px;
+        position: relative;
+      }
+
+      /* ============ CREDITS SECTION (Y2K collage style) ============ */
+      .credits-strip {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto 80px;
+        padding: 0 24px;
+      }
+
+      .credits-inner {
+        border: 1px solid rgba(68, 136, 204, 0.15);
+        background: linear-gradient(
+          135deg,
+          rgba(8, 14, 28, 0.6),
+          rgba(4, 8, 16, 0.8)
+        );
+        padding: 24px 32px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .credits-inner::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--blue-accent),
+          transparent
+        );
+        opacity: 0.3;
+      }
+
+      .credits-inner::after {
+        content: "CREDITS";
+        position: absolute;
+        top: 8px;
+        left: 12px;
+        font-family: var(--font-mono);
+        font-size: 8px;
+        color: rgba(68, 136, 204, 0.3);
+        letter-spacing: 3px;
+      }
+
+      .credits-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 40px;
+        margin-top: 16px;
+      }
+
+      .credit-line {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 1px;
+        line-height: 1.6;
+      }
+
+      .credit-line .label {
+        color: var(--blue-accent);
+        text-transform: uppercase;
+      }
+
+      .credit-line .value {
+        color: var(--green-dim);
+      }
+
+      /* ============ CONTROLLER PROMPTS ============ */
+      .controller-prompts {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 24px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: linear-gradient(
+          0deg,
+          rgba(4, 8, 16, 0.95) 0%,
+          rgba(4, 8, 16, 0.7) 80%,
+          transparent 100%
+        );
+        pointer-events: none;
+      }
+
+      .controller-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-ui);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--green-text);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .controller-btn__circle {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 2px solid var(--green-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--green-accent);
+        background: rgba(14, 24, 48, 0.8);
+        box-shadow: 0 0 8px rgba(50, 120, 200, 0.2);
+      }
+
+      /* ============ TICKER FOOTER ============ */
+      .ticker {
+        position: fixed;
+        bottom: 48px;
+        left: 0;
+        right: 0;
+        height: 24px;
+        overflow: hidden;
+        z-index: 99;
+        border-top: 1px solid rgba(30, 60, 120, 0.3);
+        background: rgba(4, 8, 16, 0.8);
+        backdrop-filter: blur(4px);
+      }
+
+      .ticker__inner {
+        display: flex;
+        white-space: nowrap;
+        animation: ticker-scroll 30s linear infinite;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--green-dim);
+        letter-spacing: 2px;
+        line-height: 24px;
+      }
+
+      @keyframes ticker-scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ============ AUDIO PLAYER FLOATING ============ */
+      .player-bar {
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(
+          135deg,
+          rgba(14, 24, 48, 0.95),
+          rgba(10, 18, 36, 0.98)
+        );
+        border: 2px solid var(--green-border);
+        border-radius: 4px;
+        padding: 12px 24px;
+        display: none;
+        align-items: center;
+        gap: 16px;
+        z-index: 101;
+        min-width: 400px;
+        box-shadow: 0 0 30px rgba(50, 120, 200, 0.15);
+      }
+
+      .player-bar.active {
+        display: flex;
+      }
+
+      .player-bar__name {
+        font-family: var(--font-ui);
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--green-text);
+        letter-spacing: 1px;
+        min-width: 120px;
+      }
+
+      .player-bar__play {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid var(--green-accent);
+        background: transparent;
+        color: var(--green-bright);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        transition: all 0.15s;
+      }
+
+      .player-bar__play:hover {
+        background: var(--green-accent);
+        color: var(--black);
+      }
+
+      .player-bar__progress {
+        flex: 1;
+        height: 4px;
+        background: var(--green-dim);
+        border-radius: 2px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .player-bar__fill {
+        height: 100%;
+        background: var(--green-bright);
+        border-radius: 2px;
+        width: 0%;
+        transition: width 0.1s linear;
+        box-shadow: 0 0 6px var(--green-glow);
+      }
+
+      .player-bar__time {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--green-dim);
+        min-width: 60px;
+        text-align: right;
+      }
+
+      /* ============ ENTRANCE ANIMATIONS ============ */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(12px);
+        animation: fadeIn 0.5s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .stagger-1 {
+        animation-delay: 0.1s;
+      }
+      .stagger-2 {
+        animation-delay: 0.2s;
+      }
+      .stagger-3 {
+        animation-delay: 0.3s;
+      }
+      .stagger-4 {
+        animation-delay: 0.4s;
+      }
+      .stagger-5 {
+        animation-delay: 0.5s;
+      }
+      .stagger-6 {
+        animation-delay: 0.6s;
+      }
+      .stagger-7 {
+        animation-delay: 0.7s;
+      }
+
+      /* ============ RESPONSIVE ============ */
+      @media (max-width: 900px) {
+        .dashboard {
+          grid-template-columns: 1fr;
+        }
+        .stats-row {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .player-bar {
+          min-width: 300px;
+          left: 16px;
+          right: 16px;
+          transform: none;
+        }
+        .side-text {
+          display: none;
+        }
+        .credits-grid {
+          grid-template-columns: 1fr;
+        }
+        .disc-container {
+          width: 400px;
+          height: 200px;
+        }
+        .cd-disc {
+          width: 400px;
+          height: 400px;
+        }
+        .features__grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .testimonials__grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .hud-bar__ticks {
+          display: none;
+        }
+        .hero-title {
+          letter-spacing: 3px;
+        }
+        .disc-container {
+          width: 300px;
+          height: 150px;
+        }
+        .cd-disc {
+          width: 300px;
+          height: 300px;
+        }
+        .stats-row {
+          grid-template-columns: 1fr 1fr;
+        }
+        .cta-section {
+          flex-direction: column;
+        }
+        .features__grid {
+          grid-template-columns: 1fr;
+        }
+        .divider__text {
+          letter-spacing: 3px;
+        }
+      }
+
+      /* ============ SCROLLBAR ============ */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--black);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--green-dim);
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--green-accent);
+      }
+
+      /* ============ VIDEO OVERLAY ============ */
+      .video-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        mix-blend-mode: color-dodge;
+        opacity: 0.1;
+        -webkit-mask-image: radial-gradient(
+          ellipse 80% 80% at 50% 50%,
+          transparent 30%,
+          rgba(0, 0, 0, 0.4) 55%,
+          rgba(0, 0, 0, 1) 80%
+        );
+        mask-image: radial-gradient(
+          ellipse 80% 80% at 50% 50%,
+          transparent 10%,
+          rgba(0, 0, 0, 0.4) 55%,
+          rgba(0, 0, 0, 1) 80%
+        );
+      }
+      .video-overlay video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Overlays -->
+    <div class="scanlines"></div>
+    <div class="grain"></div>
+
+    <!-- Video texture overlay -->
+    <div class="video-overlay">
+      <video
+        id="bgVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        onloadedmetadata="this.playbackRate=0.1"
+      >
+        <source src="IMG_4964 (2).webm" type="video/webm" />
+      </video>
+    </div>
+
+    <!-- Star decorations -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Rotated side text -->
+    <div class="side-text side-text--left">
+      VIRTUAL2 // AUDIO SYSTEM // SAMPLE COLLECTION // VOL.01 // 24-BIT //
+      PREMIUM SOUNDS
+    </div>
+    <div class="side-text side-text--right">
+      THE CONSCIOUSNESS AWAITS A NEW CONNECTION // ARCANE SYSTEM // 2026
+    </div>
+
+    <!-- HUD Top Bar -->
+    <div class="hud-bar">
+      <div class="hud-bar__brand">VIRTUAL::2</div>
+      <div class="hud-bar__ticks">
+        <div class="hud-bar__tick"></div>
+        <div class="hud-bar__tick hud-bar__tick--blue"></div>
+        <div class="hud-bar__tick hud-bar__tick--lit"></div>
+        <div class="hud-bar__tick"></div>
+        <div class="hud-bar__tick hud-bar__tick--lit"></div>
+        <div class="hud-bar__tick hud-bar__tick--blue"></div>
+        <div class="hud-bar__tick"></div>
+      </div>
+      <div class="hud-bar__coords" id="coords">X:000 Y:000</div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="page">
+      <!-- Hero Section -->
+      <section class="hero">
+        <!-- 2D CD Disc -->
+        <div class="disc-container fade-in stagger-1">
+          <div class="cd-disc">
+            <div class="cd-sheen"></div>
+          </div>
+          <!-- Lens flare at bottom of disc -->
+          <div class="lens-flare"></div>
+        </div>
+
+        <h1 class="hero-title fade-in stagger-2">
+          VIRTUAL 2
+          <span aria-hidden="true">VIRTUAL 2</span>
+        </h1>
+        <p class="hero-subtitle fade-in stagger-3">- soundkit -</p>
+        <p class="hero-tagline fade-in stagger-4">
+          the definitive sound inspired by the golden era of trance.<br />
+          electric melodies. infectious arpeggiation. modern nostalgia.
+        </p>
+
+        <!-- Stats Row -->
+        <div
+          class="stats-row fade-in stagger-5"
+          style="max-width: 600px; width: 100%; margin-bottom: 40px"
+        >
+          <div class="stat-box">
+            <div class="stat-box__val">600+</div>
+            <div class="stat-box__label">Samples</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box__val">24</div>
+            <div class="stat-box__label">Bit Depth</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box__val">44.8</div>
+            <div class="stat-box__label">kHz</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box__val">WAV</div>
+            <div class="stat-box__label">Format</div>
+          </div>
+        </div>
+
+        <div class="cta-section fade-in stagger-6">
+          <button
+            class="xbox-btn xbox-btn--primary"
+            onclick="document.getElementById('browser').scrollIntoView({behavior:'smooth'})"
+          >
+            Browse Samples
+          </button>
+          <button
+            class="xbox-btn"
+            onclick="document.getElementById('demoForm').scrollIntoView({behavior:'smooth'})"
+          >
+            Free Demo
+          </button>
+        </div>
+      </section>
+
+      <!-- Dashboard Section -->
+      <section class="dashboard" id="browser">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+          <div class="sidebar__header fade-in stagger-1">
+            <div class="sidebar__label">COLLECTION</div>
+            <div class="sidebar__value">VIRTUAL2</div>
+          </div>
+
+          <!-- Xbox-style Menu -->
+          <div class="xbox-panel fade-in stagger-2">
+            <ul class="xbox-menu" id="categoryMenu">
+              <li
+                class="xbox-menu__item xbox-menu__item--active"
+                data-category="drums"
+              >
+                Drums
+              </li>
+              <li class="xbox-menu__item" data-category="bass">Bass</li>
+              <li class="xbox-menu__item" data-category="synth">Synth</li>
+              <li class="xbox-menu__item" data-category="fx">FX</li>
+              <li class="xbox-menu__item" data-category="vocals">Vocals</li>
+              <li class="xbox-menu__item" data-category="loops">Loops</li>
+            </ul>
+          </div>
+
+          <!-- Info Box -->
+          <div class="xbox-panel info-box fade-in stagger-3">
+            <div class="info-row">
+              <span class="info-row__key">Format</span>
+              <span class="info-row__val">WAV / 24-BIT</span>
+            </div>
+            <div class="info-row">
+              <span class="info-row__key">BPM</span>
+              <span class="info-row__val">80 - 160</span>
+            </div>
+            <div class="info-row">
+              <span class="info-row__key">Key</span>
+              <span class="info-row__val">MULTI</span>
+            </div>
+            <div class="info-row">
+              <span class="info-row__key">License</span>
+              <span class="info-row__val">ROYALTY FREE</span>
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="xbox-panel fade-in stagger-4">
+            <div class="status-indicator">
+              <div class="status-dot"></div>
+              <span>SYSTEM ONLINE</span>
+            </div>
+            <!-- Circuit trace decoration -->
+            <div class="circuit-trace">
+              SYS<span class="node"></span>AUD_OUT<span class="node"></span
+              >24B<br />
+              CLK:44100<span class="node"></span>BUF:512<span
+                class="node"
+              ></span
+              >OK
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-area">
+          <!-- Sample Browser Panel -->
+          <div class="xbox-panel fade-in stagger-2">
+            <div class="panel-header" id="panelTitle">Drums</div>
+            <div class="sample-list" id="sampleList"></div>
+          </div>
+
+          <!-- Description Panel -->
+          <div class="xbox-panel desc-panel fade-in stagger-3">
+            <div class="desc-panel__title">About This Kit</div>
+            <div class="desc-panel__text">
+              Electric melodies &amp; infectious arpegiations, full reification,
+              while still innovating a rarely modernized sound. <br /><br />
+              Inspired by the sonics of
+              <strong>Virtual Self, Teneki, Sublab &amp; 4RUNNR</strong>, the
+              Virtual2 Sample Pack will send you into a journey of modern
+              nostalgia just browsing through sounds. <br /><br />
+              Despite being created with
+              <strong>Trance, Neo-Trance, 90's House Music &amp; Jungle</strong>
+              in mind, this pack has a vast list of use cases that allow you a
+              ton of flexibility in any style you wish to pursue. All samples
+              are <strong>royalty-free</strong> for commercial use.
+            </div>
+          </div>
+
+          <!-- SoundCloud Demo -->
+          <div class="xbox-panel fade-in stagger-4" style="padding: 16px">
+            <div class="desc-panel__title" style="margin-bottom: 12px">
+              Listen to the Demo
+            </div>
+            <iframe
+              width="100%"
+              height="20"
+              scrolling="no"
+              frameborder="no"
+              allow="autoplay"
+              src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1374450748&color=%231136af&inverse=true&auto_play=false&show_user=true"
+              style="border: none; opacity: 0.9"
+            ></iframe>
+          </div>
+
+          <!-- Shopify Add to Cart -->
+          <div class="xbox-panel fade-in stagger-5">
+            <div class="cta-section" style="flex-direction: column; gap: 12px">
+              <div id="shopify-buy-button"></div>
+              <button
+                class="xbox-btn xbox-btn--primary"
+                id="addToCartBtn"
+                onclick="addToShopifyCart()"
+              >
+                Add to Cart
+              </button>
+              <p
+                style="
+                  font-family: var(--font-mono);
+                  font-size: 10px;
+                  color: var(--green-dim);
+                  letter-spacing: 2px;
+                "
+              >
+                SECURE CHECKOUT VIA SHOPIFY
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Divider: Virtual Self style -->
+      <div class="divider-section">
+        <div class="divider__text">Dive In. Take Flight.</div>
+        <div class="divider__sub">
+          the consciousness awaits a new connection
+        </div>
+      </div>
+
+      <!-- Feature Grid (Hypertrance style) -->
+      <section class="features">
+        <div class="features__title">What's Inside</div>
+        <div class="features__sub">
+          791 samples // 99 presets // 69 midis // 1187 mb
+        </div>
+        <div class="features__grid">
+          <div class="feature-card">
+            <div class="feature-card__icon">DR</div>
+            <div class="feature-card__name">Drums</div>
+            <div class="feature-card__desc">
+              Pre-curated percussion samples. Rides, hats, claps, club snares,
+              buildup snares &mdash; all processed for trance and neo-trance.
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">KK</div>
+            <div class="feature-card__name">Kicks</div>
+            <div class="feature-card__desc">
+              Customizable layered kickdrums. Mix and match layers for
+              hard-hitting impact tailored to your track.
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">BS</div>
+            <div class="feature-card__name">Bass</div>
+            <div class="feature-card__desc">
+              Arpeggiated bass sequences and deep sub-bass tones. 808s, reese,
+              distorted &mdash; ready to drive your low end.
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">SY</div>
+            <div class="feature-card__name">Synths</div>
+            <div class="feature-card__desc">
+              Multi-format presets and WAV files. Lush pads, sharp leads,
+              infectious arps, and stabbing chords.
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">FX</div>
+            <div class="feature-card__name">FX &amp; Atmos</div>
+            <div class="feature-card__desc">
+              Layerable effects and atmosphere textures. Risers, impacts,
+              sweeps, noise bursts with key &amp; BPM info.
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">LP</div>
+            <div class="feature-card__name">Loops</div>
+            <div class="feature-card__desc">
+              60+ pre-mixed drumloops and melodic loops. Drag-and-drop
+              structures with stems and MIDI included.
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">MD</div>
+            <div class="feature-card__name">MIDI</div>
+            <div class="feature-card__desc">
+              Full MIDI files for melodies, arps, and bass lines. Load your own
+              synths and customize every note.
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">++</div>
+            <div class="feature-card__name">Free Updates</div>
+            <div class="feature-card__desc">
+              Community-driven expansion. New samples and presets added over
+              time &mdash; your purchase keeps growing.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="testimonials">
+        <div class="testimonials__title">What Producers Are Saying</div>
+        <div class="testimonials__grid">
+          <div class="testimonial">
+            <div class="testimonial__quote">
+              "Genuinely the sample pack of all time if you care at all about
+              trance. Every single sound just sits perfectly in a mix."
+            </div>
+            <div class="testimonial__author">Producer 1</div>
+            <div class="testimonial__role">Trance / Neo-Trance</div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial__quote">
+              "The arps and synth presets alone are worth it. Instant nostalgia
+              but still sounds modern. Incredible quality."
+            </div>
+            <div class="testimonial__author">Producer 2</div>
+            <div class="testimonial__role">Electronic / House</div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial__quote">
+              "I've been using these drums in every project since I got the
+              pack. The kicks hit different. Nothing else compares."
+            </div>
+            <div class="testimonial__author">Producer 3</div>
+            <div class="testimonial__role">Jungle / DnB</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Free Download Form Section -->
+      <section class="credits-strip fade-in stagger-5">
+        <div class="credits-inner" style="text-align: center">
+          <div
+            class="desc-panel__title"
+            style="margin-bottom: 8px; text-align: center"
+          >
+            Want to give it a spin?
+          </div>
+          <p
+            style="
+              font-family: var(--font-mono);
+              font-size: 11px;
+              color: var(--green-dim);
+              letter-spacing: 1px;
+              margin-bottom: 20px;
+            "
+          >
+            Complete the form below to download the Virtual Demo.
+          </p>
+          <form
+            id="demoForm"
+            onsubmit="submitDemoForm(event)"
+            style="
+              max-width: 400px;
+              margin: 0 auto;
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+            "
+          >
+            <input
+              type="text"
+              name="fullname"
+              placeholder="First Name*"
+              required
+              style="
+                padding: 10px 14px;
+                background: rgba(14, 24, 48, 0.8);
+                border: 1px solid var(--green-border);
+                color: var(--green-text);
+                font-family: var(--font-mono);
+                font-size: 13px;
+                outline: none;
+                border-radius: 2px;
+              "
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email*"
+              required
+              style="
+                padding: 10px 14px;
+                background: rgba(14, 24, 48, 0.8);
+                border: 1px solid var(--green-border);
+                color: var(--green-text);
+                font-family: var(--font-mono);
+                font-size: 13px;
+                outline: none;
+                border-radius: 2px;
+              "
+            />
+            <button
+              type="submit"
+              class="xbox-btn"
+              style="width: 100%; margin-top: 4px"
+            >
+              Free Download
+            </button>
+          </form>
+          <div
+            id="formThankYou"
+            style="
+              display: none;
+              font-family: var(--font-mono);
+              font-size: 14px;
+              color: var(--green-bright);
+              padding: 20px;
+            "
+          >
+            Check your email for the download link!
+          </div>
+        </div>
+      </section>
+
+      <!-- Credits Strip (Y2K collage style) -->
+      <div class="credits-strip fade-in stagger-6">
+        <div class="credits-inner">
+          <div class="credits-grid">
+            <div class="credit-line">
+              <span class="label">Produced by:</span>
+              <span class="value">LOST AUDIO</span>
+            </div>
+            <div class="credit-line">
+              <span class="label">Sound Design:</span>
+              <span class="value">ANALOG HARDWARE CHAIN</span>
+            </div>
+            <div class="credit-line">
+              <span class="label">Inspired by:</span>
+              <span class="value">VIRTUAL SELF / TENEKI / SUBLAB / 4RUNNR</span>
+            </div>
+            <div class="credit-line">
+              <span class="label">Genre:</span>
+              <span class="value"
+                >TRANCE / NEO-TRANCE / 90'S HOUSE / JUNGLE</span
+              >
+            </div>
+            <div class="credit-line">
+              <span class="label">Compatible:</span>
+              <span class="value">FL STUDIO / ABLETON / LOGIC / PRO TOOLS</span>
+            </div>
+            <div class="credit-line">
+              <span class="label">License:</span>
+              <span class="value">ROYALTY FREE / COMMERCIAL USE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio Player Bar -->
+    <div class="player-bar" id="playerBar">
+      <button class="player-bar__play" id="playBtn" onclick="togglePlay()">
+        &#9654;
+      </button>
+      <div class="player-bar__name" id="playerName">&mdash;</div>
+      <div
+        class="player-bar__progress"
+        id="progressBar"
+        onclick="seekAudio(event)"
+      >
+        <div class="player-bar__fill" id="progressFill"></div>
+      </div>
+      <div class="player-bar__time" id="playerTime">0:00</div>
+    </div>
+
+    <!-- Ticker -->
+    <div class="ticker">
+      <div class="ticker__inner" id="ticker"></div>
+    </div>
+
+    <!-- Controller Prompts -->
+    <div class="controller-prompts">
+      <div class="controller-btn">
+        <div class="controller-btn__circle">B</div>
+        <span>Back</span>
+      </div>
+      <div class="controller-btn">
+        <div class="controller-btn__circle">A</div>
+        <span>Select</span>
+      </div>
+    </div>
+
+    <script>
+      // ============ SAMPLE DATA ============
+      const sampleData = {
+        drums: [
+          { name: "Kick_Heavy_01", dur: "0:02" },
+          { name: "Kick_Sub_02", dur: "0:01" },
+          { name: "Snare_Crack_01", dur: "0:01" },
+          { name: "Snare_Rim_02", dur: "0:01" },
+          { name: "HiHat_Closed_01", dur: "0:01" },
+          { name: "HiHat_Open_02", dur: "0:02" },
+          { name: "Clap_808_01", dur: "0:01" },
+          { name: "Perc_Shaker_01", dur: "0:02" },
+          { name: "Cymbal_Crash_01", dur: "0:03" },
+          { name: "Tom_Deep_01", dur: "0:02" },
+        ],
+        bass: [
+          { name: "Bass_808_01", dur: "0:03" },
+          { name: "Bass_Sub_02", dur: "0:04" },
+          { name: "Bass_Distort_01", dur: "0:03" },
+          { name: "Bass_Reese_01", dur: "0:04" },
+          { name: "Bass_Pluck_01", dur: "0:02" },
+          { name: "Bass_Growl_01", dur: "0:03" },
+        ],
+        synth: [
+          { name: "Synth_Pad_Lush_01", dur: "0:06" },
+          { name: "Synth_Lead_Saw_01", dur: "0:04" },
+          { name: "Synth_Arp_01", dur: "0:05" },
+          { name: "Synth_Chord_01", dur: "0:04" },
+          { name: "Synth_Pluck_01", dur: "0:02" },
+          { name: "Synth_Bell_01", dur: "0:03" },
+          { name: "Synth_Stab_01", dur: "0:01" },
+        ],
+        fx: [
+          { name: "FX_Riser_01", dur: "0:04" },
+          { name: "FX_Impact_01", dur: "0:02" },
+          { name: "FX_Sweep_01", dur: "0:03" },
+          { name: "FX_Glitch_01", dur: "0:02" },
+          { name: "FX_Noise_Burst_01", dur: "0:01" },
+          { name: "FX_Reverse_01", dur: "0:03" },
+        ],
+        vocals: [
+          { name: "Vox_Chop_01", dur: "0:02" },
+          { name: "Vox_Adlib_01", dur: "0:01" },
+          { name: "Vox_Phrase_01", dur: "0:04" },
+          { name: "Vox_Texture_01", dur: "0:05" },
+          { name: "Vox_Stack_01", dur: "0:03" },
+        ],
+        loops: [
+          { name: "Loop_Drum_140bpm_01", dur: "0:08" },
+          { name: "Loop_Melody_120bpm_01", dur: "0:08" },
+          { name: "Loop_Bass_130bpm_01", dur: "0:08" },
+          { name: "Loop_Perc_150bpm_01", dur: "0:04" },
+          { name: "Loop_Atmo_90bpm_01", dur: "0:08" },
+        ],
+      };
+
+      let currentCategory = "drums";
+      let playingIdx = -1;
+
+      // ============ RENDER SAMPLES ============
+      function renderSamples(category) {
+        const list = document.getElementById("sampleList");
+        const title = document.getElementById("panelTitle");
+        const items = sampleData[category] || [];
+        title.textContent =
+          category.charAt(0).toUpperCase() + category.slice(1);
+        list.innerHTML = items
+          .map((s, i) => {
+            const bars = Array.from({ length: 8 }, () => {
+              const h = Math.floor(Math.random() * 16) + 4;
+              return `<span style="height:${h}px"></span>`;
+            }).join("");
+            const idx = String(i + 1).padStart(2, "0");
+            return `
+      <div class="sample-item" data-idx="${i}" onclick="playSample(${i})">
+        <div class="sample-item__idx">${category.substring(0, 1).toUpperCase()}.${idx}</div>
+        <div class="sample-item__name">${s.name}</div>
+        <div class="sample-item__waveform">${bars}</div>
+        <div class="sample-item__dur">${s.dur}</div>
+      </div>`;
+          })
+          .join("");
+      }
+
+      // ============ CATEGORY MENU ============
+      document.getElementById("categoryMenu").addEventListener("click", (e) => {
+        const item = e.target.closest(".xbox-menu__item");
+        if (!item) return;
+        document
+          .querySelectorAll(".xbox-menu__item")
+          .forEach((i) => i.classList.remove("xbox-menu__item--active"));
+        item.classList.add("xbox-menu__item--active");
+        currentCategory = item.dataset.category;
+        playingIdx = -1;
+        renderSamples(currentCategory);
+      });
+
+      // ============ PLAY SAMPLE ============
+      function playSample(idx) {
+        const items = document.querySelectorAll(".sample-item");
+        items.forEach((i) => i.classList.remove("sample-item--playing"));
+        if (playingIdx === idx) {
+          playingIdx = -1;
+          document.getElementById("playerBar").classList.remove("active");
+          return;
+        }
+        playingIdx = idx;
+        items[idx].classList.add("sample-item--playing");
+        const data = sampleData[currentCategory][idx];
+        const bar = document.getElementById("playerBar");
+        bar.classList.add("active");
+        document.getElementById("playerName").textContent = data.name;
+        document.getElementById("playerTime").textContent = data.dur;
+        const bars = items[idx].querySelectorAll(".sample-item__waveform span");
+        bars.forEach((b, i) => {
+          b.style.animationDelay = `${i * 0.08}s`;
+        });
+        simulateProgress();
+      }
+
+      let progressInterval;
+      function simulateProgress() {
+        clearInterval(progressInterval);
+        let pct = 0;
+        const fill = document.getElementById("progressFill");
+        fill.style.width = "0%";
+        progressInterval = setInterval(() => {
+          pct += 0.5;
+          if (pct >= 100) {
+            pct = 0;
+            playingIdx = -1;
+            document
+              .querySelectorAll(".sample-item")
+              .forEach((i) => i.classList.remove("sample-item--playing"));
+            document.getElementById("playerBar").classList.remove("active");
+            clearInterval(progressInterval);
+            return;
+          }
+          fill.style.width = pct + "%";
+        }, 50);
+      }
+
+      function togglePlay() {
+        if (playingIdx >= 0) {
+          playingIdx = -1;
+          document
+            .querySelectorAll(".sample-item")
+            .forEach((i) => i.classList.remove("sample-item--playing"));
+          document.getElementById("playerBar").classList.remove("active");
+          clearInterval(progressInterval);
+        }
+      }
+
+      function seekAudio(e) {
+        const bar = document.getElementById("progressBar");
+        const rect = bar.getBoundingClientRect();
+        const pct = ((e.clientX - rect.left) / rect.width) * 100;
+        document.getElementById("progressFill").style.width = pct + "%";
+      }
+
+      // ============ TICKER ============
+      function initTicker() {
+        const text =
+          "VIRTUAL2 SAMPLE PACK \u2022 TRANCE / NEO-TRANCE / 90'S HOUSE / JUNGLE \u2022 600+ SOUNDS \u2022 24-BIT WAV \u2022 ROYALTY FREE  \u2022 LOST AUDIO \u2022 ";
+        document.getElementById("ticker").textContent = text.repeat(8);
+      }
+
+      // ============ COORDS TRACKER ============
+      document.addEventListener("mousemove", (e) => {
+        const x = String(e.clientX).padStart(4, "0");
+        const y = String(e.clientY).padStart(4, "0");
+        document.getElementById("coords").textContent = `X:${x} Y:${y}`;
+      });
+
+      // ============ STAR DECORATIONS ============
+      function initStars() {
+        const container = document.getElementById("stars");
+        for (let i = 0; i < 20; i++) {
+          const star = document.createElement("div");
+          star.className = "star";
+          star.textContent = "\u2726";
+          star.style.left = Math.random() * 100 + "%";
+          star.style.top = Math.random() * 100 + "%";
+          star.style.animationDelay = Math.random() * 5 + "s";
+          star.style.animationDuration = 2 + Math.random() * 4 + "s";
+          star.style.fontSize = 6 + Math.random() * 8 + "px";
+          // Mix of green and blue stars
+          star.style.color =
+            Math.random() > 0.5
+              ? "rgba(68,170,255,0.5)"
+              : "rgba(102,187,255,0.4)";
+          container.appendChild(star);
+        }
+      }
+
+      // ============ BACKGROUND CANVAS ============
+      function initBackground() {
+        const canvas = document.getElementById("bgCanvas");
+        const ctx = canvas.getContext("2d");
+        let w, h;
+        const particles = [];
+        const PARTICLE_COUNT = 50;
+
+        function resize() {
+          w = canvas.width = window.innerWidth;
+          h = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 2 + 1,
+            blue: Math.random() > 0.7, // some particles are blue
+          });
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, w, h);
+
+          // Dual radial gradient background (green + blue)
+          const g1 = ctx.createRadialGradient(
+            w * 0.3,
+            h * 0.4,
+            0,
+            w * 0.3,
+            h * 0.4,
+            w * 0.7,
+          );
+          g1.addColorStop(0, "rgba(15,30,60,0.12)");
+          g1.addColorStop(1, "transparent");
+          ctx.fillStyle = g1;
+          ctx.fillRect(0, 0, w, h);
+
+          const g2 = ctx.createRadialGradient(
+            w * 0.7,
+            h * 0.6,
+            0,
+            w * 0.7,
+            h * 0.6,
+            w * 0.5,
+          );
+          g2.addColorStop(0, "rgba(20,40,80,0.06)");
+          g2.addColorStop(1, "transparent");
+          ctx.fillStyle = g2;
+          ctx.fillRect(0, 0, w, h);
+
+          // Grid
+          const spacing = 60;
+          ctx.strokeStyle = "rgba(30,60,120,0.035)";
+          ctx.lineWidth = 1;
+          for (let x = 0; x < w; x += spacing) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, h);
+            ctx.stroke();
+          }
+          for (let y = 0; y < h; y += spacing) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(w, y);
+            ctx.stroke();
+          }
+
+          // Grid dots
+          ctx.fillStyle = "rgba(30,60,120,0.08)";
+          for (let x = 0; x < w; x += spacing) {
+            for (let y = 0; y < h; y += spacing) {
+              ctx.fillRect(x, y, 1, 1);
+            }
+          }
+
+          // Circuit board traces (horizontal lines with right-angle turns)
+          ctx.strokeStyle = "rgba(68,136,204,0.03)";
+          ctx.lineWidth = 1;
+          const traceY = [h * 0.2, h * 0.4, h * 0.6, h * 0.8];
+          for (const ty of traceY) {
+            ctx.beginPath();
+            ctx.moveTo(0, ty);
+            ctx.lineTo(w * 0.3, ty);
+            ctx.lineTo(w * 0.32, ty - 20);
+            ctx.lineTo(w * 0.7, ty - 20);
+            ctx.lineTo(w * 0.72, ty);
+            ctx.lineTo(w, ty);
+            ctx.stroke();
+            // Nodes at junctions
+            ctx.fillStyle = "rgba(68,136,204,0.06)";
+            ctx.beginPath();
+            ctx.arc(w * 0.3, ty, 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(w * 0.7, ty - 20, 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Particles
+          for (const p of particles) {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = w;
+            if (p.x > w) p.x = 0;
+            if (p.y < 0) p.y = h;
+            if (p.y > h) p.y = 0;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = p.blue
+              ? "rgba(102,187,255,0.12)"
+              : "rgba(68,170,255,0.12)";
+            ctx.fill();
+          }
+
+          // Particle connections
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const d2 = dx * dx + dy * dy;
+              if (d2 < 14400) {
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                const mixed = particles[i].blue || particles[j].blue;
+                ctx.strokeStyle = mixed
+                  ? `rgba(68,136,204,${0.06 * (1 - d2 / 14400)})`
+                  : `rgba(50,120,200,${0.06 * (1 - d2 / 14400)})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+              }
+            }
+          }
+
+          requestAnimationFrame(draw);
+        }
+
+        draw();
+      }
+
+      // ============ SHOPIFY BUY BUTTON SDK ============
+      // Replace YOUR_DOMAIN and YOUR_PRODUCT_ID with your actual Shopify values
+      const SHOPIFY_DOMAIN = "lostaudioco.myshopify.com"; // <-- UPDATE THIS
+      const SHOPIFY_STOREFRONT_TOKEN = "YOUR_STOREFRONT_ACCESS_TOKEN"; // <-- UPDATE THIS
+      const SHOPIFY_PRODUCT_ID = "YOUR_PRODUCT_GID"; // e.g. 'gid://shopify/Product/123456789'
+
+      let shopifyClient = null;
+      let shopifyCheckout = null;
+      let shopifyProduct = null;
+
+      function loadShopifySDK() {
+        const script = document.createElement("script");
+        script.src =
+          "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
+        script.onload = initShopifyClient;
+        document.head.appendChild(script);
+      }
+
+      function initShopifyClient() {
+        if (typeof ShopifyBuy === "undefined") return;
+        shopifyClient = ShopifyBuy.buildClient({
+          domain: SHOPIFY_DOMAIN,
+          storefrontAccessToken: SHOPIFY_STOREFRONT_TOKEN,
+        });
+        // Create a checkout session
+        shopifyClient.checkout.create().then(function (checkout) {
+          shopifyCheckout = checkout;
+        });
+        // Fetch product to get variant ID and price
+        shopifyClient.product
+          .fetchByHandle("virtual")
+          .then(function (product) {
+            shopifyProduct = product;
+            // Update button with real price
+            var btn = document.getElementById("addToCartBtn");
+            if (btn && product.variants && product.variants[0]) {
+              var price =
+                product.variants[0].price.amount || product.variants[0].price;
+              btn.textContent =
+                "Add to Cart \u2014 $" + parseFloat(price).toFixed(2);
+            }
+          })
+          .catch(function () {
+            // Product handle may differ — update 'virtual' above to match your product
+          });
+      }
+
+      function addToShopifyCart() {
+        if (!shopifyClient || !shopifyCheckout || !shopifyProduct) {
+          // Fallback: redirect to the Shopify product page
+          window.open(
+            "https://" + SHOPIFY_DOMAIN + "/products/virtual",
+            "_blank",
+          );
+          return;
+        }
+        var variantId = shopifyProduct.variants[0].id;
+        shopifyClient.checkout
+          .addLineItems(shopifyCheckout.id, [
+            {
+              variantId: variantId,
+              quantity: 1,
+            },
+          ])
+          .then(function (checkout) {
+            window.open(checkout.webUrl, "_blank");
+          });
+      }
+
+      // ============ FREE DOWNLOAD FORM ============
+      function submitDemoForm(e) {
+        e.preventDefault();
+        var form = document.getElementById("demoForm");
+        var formData = new FormData(form);
+
+        // Submit to ActiveCampaign
+        var params = new URLSearchParams();
+        params.append("u", "33");
+        params.append("f", "33");
+        params.append("s", "");
+        params.append("c", "0");
+        params.append("m", "0");
+        params.append("act", "sub");
+        params.append("v", "2");
+        params.append("or", "1111809790c02bdf0f9b616000f924fc");
+        params.append("fullname", formData.get("fullname"));
+        params.append("email", formData.get("email"));
+
+        // Send via script tag (JSONP — same as the original form)
+        var script = document.createElement("script");
+        script.src =
+          "https://lostaudio.activehosted.com/proc.php?" +
+          params.toString() +
+          "&jsonp=true";
+        document.head.appendChild(script);
+
+        // Show thank you
+        form.style.display = "none";
+        document.getElementById("formThankYou").style.display = "block";
+      }
+
+      // ============ INIT ============
+      renderSamples("drums");
+      initTicker();
+      initBackground();
+      initStars();
+      loadShopifySDK();
+    </script>
+  </body>
+</html>

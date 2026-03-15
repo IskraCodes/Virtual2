@@ -1,0 +1,456 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "text_size": 8,
+            "product_show_cutline": false,
+            "show_rating": false,
+            "show_rating_count": false,
+            "padding_bottom": 20
+          }
+        },
+        "loox_reviews_loox_rating_ixxedw": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "contentSize": 16,
+            "pattern": "",
+            "hideText": false,
+            "alignment": "center",
+            "layout": "",
+            "textColor": "",
+            "starColor": "#ff3939",
+            "showAllReviews": false,
+            "looxOpenFloatingWidget": false,
+            "emptyRatingWidget": false
+          }
+        },
+        "30342a22-753c-4520-99dd-a889a664f459": {
+          "type": "price",
+          "settings": {
+            "price_size": 5,
+            "padding_bottom": 40
+          }
+        },
+        "quantity": {
+          "type": "quantity",
+          "disabled": true,
+          "settings": {
+            "show_quantity": true,
+            "padding_bottom": 20
+          }
+        },
+        "buttons": {
+          "type": "add-buttons",
+          "settings": {
+            "enable_payment_button": true,
+            "padding_bottom": 20
+          }
+        },
+        "pickup": {
+          "type": "pickup",
+          "disabled": true,
+          "settings": {
+            "padding_bottom": 20
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "style": "none",
+            "enable_description": true,
+            "read_more": true,
+            "icon_description": "",
+            "description_expanded": true,
+            "title_1": "Information",
+            "icon_name_1": "",
+            "raw_content_1": "<p>This content type will accept <strong>rich text</strong> to help with adding styles and links to additional pages or content. Use this to add supplementary information to help your buyers.</p>",
+            "title_2": "Details",
+            "icon_name_2": "",
+            "raw_content_2": "<p>You can use product metafields to assign content to this tab that is unique to an individual product.  Use tabs to highlight unique features, sizing information, or other sales information.</p>",
+            "title_3": "",
+            "icon_name_3": "",
+            "raw_content_3": "",
+            "title_4": "",
+            "icon_name_4": "",
+            "raw_content_4": "",
+            "title_5": "",
+            "icon_name_5": "",
+            "raw_content_5": "",
+            "padding_bottom": 20
+          }
+        },
+        "upsell": {
+          "type": "upsell",
+          "disabled": true,
+          "settings": {
+            "title": "Buy it with",
+            "upsell_type": "product_single",
+            "product": "",
+            "upsell_product_list": [],
+            "upsell_list_limit": 1,
+            "padding_bottom": 20
+          }
+        },
+        "sharing": {
+          "type": "sharing",
+          "disabled": true,
+          "settings": {
+            "share_label": "Share",
+            "target_device": "",
+            "padding_bottom": 20
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "loox_reviews_loox_rating_ixxedw",
+        "30342a22-753c-4520-99dd-a889a664f459",
+        "quantity",
+        "buttons",
+        "pickup",
+        "description",
+        "upsell",
+        "sharing"
+      ],
+      "settings": {
+        "layout": "thumbnails-below@slides",
+        "image_width": "wide",
+        "image_spacing": 10,
+        "align": "center",
+        "product_breadcrumbs": false,
+        "bg": "#000000",
+        "text_color": "#fff",
+        "mobile_layout": "carousel",
+        "enable_video_looping": true,
+        "zoom_enable": true,
+        "alt_text_enable": true,
+        "alt_text_icon": "icon-ruler",
+        "width": "wrapper",
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    },
+    "147adc68-e178-497d-ab2d-3f139fd61748": {
+      "type": "section-html",
+      "settings": {
+        "html": "<div style='text-align: center; padding: 2rem 2em; border: 2px solid #282828; border-radius: 1em;'><h2 class='home__subtitle'>Listen to the demo</h2><iframe width=\"100%\" height=\"20\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1374450748&color=%231136af&inverse=true&auto_play=false&show_user=true\"></iframe></div>",
+        "width": "wrapper",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "c4af2acc-a86d-43f9-b029-0baf864dd610": {
+      "type": "section-sound-section",
+      "settings": {
+        "heading": "<p>Preview sounds from the <strong>Virtual Pack</strong></p>",
+        "background_color": "#272727",
+        "wave_color": "#394aff"
+      }
+    },
+    "5468793a-2301-4bd7-a5a6-3d0b3aa44e1a": {
+      "type": "section-custom-content",
+      "blocks": {
+        "a3cf9af8-9365-4e7c-8ae1-758095cbd15a": {
+          "type": "video",
+          "settings": {
+            "video_bg": "shopify://files/videos/edf34d9c7ab24cde986d8d4c9202e2fd.mp4",
+            "object_position": "center-center",
+            "bg_position": "center-center",
+            "video_link": "",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "a710cb91-dffa-40ca-a8d5-b78391d9750d": {
+          "type": "audio_file",
+          "settings": {
+            "kicker": "DEFINITIVE SOUND INSPIRED BY THE GOLDEN ERA OF TRANCE",
+            "text": "<p>Electric melodies & Infectious Arpegiations, full reification, while still innovating a rarely modernized sound.</p>",
+            "radius_size": "tw-rounded-none",
+            "audio_link": "<p>{{ product.metafields.my_fields.custom_audio_blocks | metafield_text }}</p>",
+            "audio_file_head": "",
+            "align_text": "text-center",
+            "text_color": "text--white",
+            "bg_color": "#282828",
+            "audio-bg-color": "#282828"
+          }
+        }
+      },
+      "block_order": [
+        "a3cf9af8-9365-4e7c-8ae1-758095cbd15a",
+        "a710cb91-dffa-40ca-a8d5-b78391d9750d"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "brick_gutter": 0,
+        "borders": false,
+        "width": "wrapper",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "2cb78737-3cb6-40b9-890b-7690f8597b9a": {
+      "type": "section-custom-content",
+      "blocks": {
+        "6cb343f2-742f-4524-90fc-0b541e1f53bb": {
+          "type": "audio_file",
+          "settings": {
+            "kicker": "Modern Nostalgia",
+            "text": "<p>Inspired by the sonics of Virtual Self, Teneki, Sublab & 4RUNNR, the Virtual Sample Pack will send you into a journey of modern nostalgia just browsing through sounds.</p>",
+            "radius_size": "tw-rounded-none",
+            "audio_link": "<p>{{ product.metafields.my_fields.bonus_2 | metafield_text }}</p>",
+            "audio_file_head": "",
+            "align_text": "text-center",
+            "text_color": "text--white",
+            "bg_color": "#282828",
+            "audio-bg-color": "#282828"
+          }
+        },
+        "774cbe9e-be25-44db-84b1-b787707b5795": {
+          "type": "video",
+          "settings": {
+            "video_bg": "shopify://files/videos/c97323f9ff5d4121807d5dbb6b8eed6d.mp4",
+            "object_position": "center-center",
+            "bg_position": "center-center",
+            "video_link": "",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": [
+        "6cb343f2-742f-4524-90fc-0b541e1f53bb",
+        "774cbe9e-be25-44db-84b1-b787707b5795"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "brick_gutter": 0,
+        "borders": false,
+        "width": "wrapper",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "8d966760-fb4b-4a3b-894d-90d43159719d": {
+      "type": "section-custom-content",
+      "blocks": {
+        "973835f0-b273-41ae-b965-d04b160c6f68": {
+          "type": "video",
+          "settings": {
+            "video_bg": "shopify://files/videos/b172d674d02f441aa3fb8bbc2ed4458f.mp4",
+            "object_position": "center-center",
+            "bg_position": "center-center",
+            "video_link": "",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        },
+        "e6aac54c-3fe4-4150-a559-6aa6721f2978": {
+          "type": "audio_file",
+          "settings": {
+            "kicker": "Virtuosity",
+            "text": "<p>Despite the Virtual2 Sample Pack being created with Trance, Neo-Trance, 90's House Music & Jungle in mind, this pack has a vast list of use cases that allow you a ton of flexibility in any style you wish to pursue.</p>",
+            "radius_size": "tw-rounded-none",
+            "audio_link": "<p>{{ product.metafields.my_fields.bonus_3 | metafield_text }}</p>",
+            "audio_file_head": "",
+            "align_text": "text-center",
+            "text_color": "text--white",
+            "bg_color": "#282828",
+            "audio-bg-color": "#282828"
+          }
+        }
+      },
+      "block_order": [
+        "973835f0-b273-41ae-b965-d04b160c6f68",
+        "e6aac54c-3fe4-4150-a559-6aa6721f2978"
+      ],
+      "settings": {
+        "height": "use_screen_one_half",
+        "brick_gutter": 0,
+        "borders": false,
+        "width": "wrapper",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "277d7e77-6a26-455f-8d0c-630a8f9cc3c6": {
+      "type": "section-button-modal",
+      "blocks": {
+        "8a2a9bfc-3d5d-4554-8a64-6bae65605cf3": {
+          "type": "richtext",
+          "settings": {
+            "heading": "Want to give it a spin?",
+            "text_color": "#ffffff",
+            "heading_size": "tw-text-2xl"
+          }
+        },
+        "template--15713441349787__277d7e77-6a26-455f-8d0c-630a8f9cc3c6-1667433893a8350741-0": {
+          "type": "form",
+          "settings": {
+            "form_title": "Get the free download",
+            "html": "<style></style>\n<style>\n #_form_33_ { font-size:14px; line-height:1.6; font-family:arial, helvetica, sans-serif; margin:0; }\n #_form_33_ * { outline:0; }\n ._form_hide { display:none; visibility:hidden; }\n ._form_show { display:block; visibility:visible; }\n #_form_33_._form-top { top:0; }\n #_form_33_._form-bottom { bottom:0; }\n #_form_33_._form-left { left:0; }\n #_form_33_._form-right { right:0; }\n #_form_33_ input[type=\"text\"],#_form_33_ input[type=\"tel\"],#_form_33_ input[type=\"date\"],#_form_33_ textarea { padding:6px; height:auto; border:#979797 1px solid; border-radius:4px; color:#000 !important; font-size:14px; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; }\n #_form_33_ textarea { resize:none; }\n #_form_33_ ._submit { -webkit-appearance:none; cursor:pointer; font-family:arial, sans-serif; font-size:14px; text-align:center; background:#fff !important; border:0 !important; -moz-border-radius:4px !important; -webkit-border-radius:4px !important; border-radius:4px !important; color:#fff !important; padding:15px !important; }\n #_form_33_ ._close-icon { cursor:pointer; background-image:url('https://d226aj4ao1t61q.cloudfront.net/esfkyjh1u_forms-close-dark.png'); background-repeat:no-repeat; background-size:14.2px 14.2px; position:absolute; display:block; top:11px; right:9px; overflow:hidden; width:16.2px; height:16.2px; }\n #_form_33_ ._close-icon:before { position:relative; }\n #_form_33_ ._form-body { margin-bottom:30px; }\n #_form_33_ ._form-image-left { width:150px; float:left; }\n #_form_33_ ._form-content-right { margin-left:164px; }\n #_form_33_ ._form-branding { color:#fff; font-size:10px; clear:both; text-align:left; margin-top:30px; font-weight:100; }\n #_form_33_ ._form-branding ._logo { display:block; width:130px; height:14px; margin-top:6px; background-image:url('https://d226aj4ao1t61q.cloudfront.net/hh9ujqgv5_aclogo_li.png'); background-size:130px auto; background-repeat:no-repeat; }\n #_form_33_ .form-sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0, 0, 0, 0); border:0; }\n #_form_33_ ._form-label,#_form_33_ ._form_element ._form-label { font-weight:bold; margin-bottom:5px; display:block; }\n #_form_33_._dark ._form-branding { color:#333; }\n #_form_33_._dark ._form-branding ._logo { background-image:url('https://d226aj4ao1t61q.cloudfront.net/jftq2c8s_aclogo_dk.png'); }\n #_form_33_ ._form_element { position:relative; margin-bottom:10px; font-size:0; max-width:100%; }\n #_form_33_ ._form_element * { font-size:14px; }\n #_form_33_ ._form_element._clear { clear:both; width:100%; float:none; }\n #_form_33_ ._form_element._clear:after { clear:left; }\n #_form_33_ ._form_element input[type=\"text\"],#_form_33_ ._form_element input[type=\"date\"],#_form_33_ ._form_element select,#_form_33_ ._form_element textarea:not(.g-recaptcha-response) { display:block; width:100%; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; font-family:inherit; }\n #_form_33_ ._field-wrapper { position:relative; }\n #_form_33_ ._inline-style { float:left; }\n #_form_33_ ._inline-style input[type=\"text\"] { width:150px; }\n #_form_33_ ._inline-style:not(._clear) + ._inline-style:not(._clear) { margin-left:20px; }\n #_form_33_ ._form_element img._form-image { max-width:100%; }\n #_form_33_ ._form_element ._form-fieldset { border:0; padding:0.01em 0 0 0; margin:0; min-width:0; }\n #_form_33_ ._clear-element { clear:left; }\n #_form_33_ ._full_width { width:100%; }\n #_form_33_ ._form_full_field { display:block; width:100%; margin-bottom:10px; }\n #_form_33_ input[type=\"text\"]._has_error,#_form_33_ textarea._has_error { border:#f37c7b 1px solid; }\n #_form_33_ input[type=\"checkbox\"]._has_error { outline:#f37c7b 1px solid; }\n #_form_33_ ._error { display:block; position:absolute; font-size:14px; z-index:10000001; }\n #_form_33_ ._error._above { padding-bottom:4px; bottom:39px; right:0; }\n #_form_33_ ._error._below { padding-top:8px; top:100%; right:0; }\n #_form_33_ ._error._above ._error-arrow { bottom:-4px; right:15px; border-left:8px solid transparent; border-right:8px solid transparent; border-top:8px solid #fdd; }\n #_form_33_ ._error._below ._error-arrow { top:0; right:15px; border-left:8px solid transparent; border-right:8px solid transparent; border-bottom:8px solid #fdd; }\n #_form_33_ ._error-inner { padding:12px 12px 12px 36px; background-color:#fdd; background-image:url(\"data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM9 3V9H7V3H9ZM9 13V11H7V13H9Z' fill='%23CA0000'/%3E%3C/svg%3E\"); background-repeat:no-repeat; background-position:12px center; font-size:14px; font-family:arial, sans-serif; font-weight:600; line-height:16px; color:#000; text-align:center; text-decoration:none; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; box-shadow:0px 1px 4px rgba(31, 33, 41, 0.298295); }\n #_form_33_ ._error-inner._form_error { margin-bottom:5px; text-align:left; }\n #_form_33_ ._button-wrapper ._error-inner._form_error { position:static; }\n #_form_33_ ._error-inner._no_arrow { margin-bottom:10px; }\n #_form_33_ ._error-arrow { position:absolute; width:0; height:0; }\n #_form_33_ ._error-html { margin-bottom:10px; }\n .pika-single { z-index:10000001 !important; }\n #_form_33_ input[type=\"text\"].datetime_date { width:69%; display:inline; }\n #_form_33_ select.datetime_time { width:29%; display:inline; height:32px; }\n #_form_33_ input[type=\"date\"].datetime_date { width:69%; display:inline-flex; }\n #_form_33_ input[type=\"time\"].datetime_time { width:29%; display:inline-flex; }\n @media all and (min-width:320px) and (max-width:667px) { ::-webkit-scrollbar { display:none; }\n #_form_33_ { margin:0; width:100%; min-width:100%; max-width:100%; box-sizing:border-box; }\n #_form_33_ * { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; font-size:1em; }\n #_form_33_ ._form-content { margin:0; width:100%; }\n #_form_33_ ._form-inner { display:block; min-width:100%; }\n #_form_33_ ._form-title,#_form_33_ ._inline-style { margin-top:0; margin-right:0; margin-left:0; }\n #_form_33_ ._form-title { font-size:1.2em; }\n #_form_33_ ._form_element { margin:0 0 20px; padding:0; width:100%; }\n #_form_33_ ._form-element,#_form_33_ ._inline-style,#_form_33_ input[type=\"text\"],#_form_33_ label,#_form_33_ p,#_form_33_ textarea:not(.g-recaptcha-response) { float:none; display:block; width:100%; }\n #_form_33_ ._row._checkbox-radio label { display:inline; }\n #_form_33_ ._row,#_form_33_ p,#_form_33_ label { margin-bottom:0.7em; width:100%; }\n #_form_33_ ._row input[type=\"checkbox\"],#_form_33_ ._row input[type=\"radio\"] { margin:0 !important; vertical-align:middle !important; }\n #_form_33_ ._row input[type=\"checkbox\"] + span label { display:inline; }\n #_form_33_ ._row span label { margin:0 !important; width:initial !important; vertical-align:middle !important; }\n #_form_33_ ._form-image { max-width:100%; height:auto !important; }\n #_form_33_ input[type=\"text\"] { padding-left:10px; padding-right:10px; font-size:16px; line-height:1.3em; -webkit-appearance:none; }\n #_form_33_ input[type=\"radio\"],#_form_33_ input[type=\"checkbox\"] { display:inline-block; width:1.3em; height:1.3em; font-size:1em; margin:0 0.3em 0 0; vertical-align:baseline; }\n #_form_33_ button[type=\"submit\"] { padding:20px; font-size:1.5em; }\n #_form_33_ ._inline-style { margin:20px 0 0 !important; }\n }\n #_form_33_ { position:relative; text-align:left; margin:25px auto 0; padding:20px; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; *zoom:1; background:#242424 !important; border:0px solid #b0b0b0 !important; max-width:500px; -moz-border-radius:10px !important; -webkit-border-radius:10px !important; border-radius:10px !important; color:#fff F !important; }\n #_form_33_._inline-form,#_form_33_._inline-form ._form-content,#_form_33_._inline-form input,#_form_33_._inline-form ._submit { font-family:Helvetica, Arial, sans-serif; }\n #_form_33_ ._form-title { font-size:22px; line-height:22px; font-weight:600; margin-bottom:0; }\n #_form_33_:before,#_form_33_:after { content:\" \"; display:table; }\n #_form_33_:after { clear:both; }\n #_form_33_._inline-style { width:auto; display:inline-block; }\n #_form_33_._inline-style input[type=\"text\"],#_form_33_._inline-style input[type=\"date\"] { padding:10px 12px; }\n #_form_33_._inline-style button._inline-style { position:relative; top:27px; }\n #_form_33_._inline-style p { margin:0; }\n #_form_33_._inline-style ._button-wrapper { position:relative; margin:27px 12.5px 0 20px; }\n #_form_33_ ._form-thank-you { position:relative; left:0; right:0; text-align:center; font-size:18px; }\n @media all and (min-width:320px) and (max-width:667px) { #_form_33_._inline-form._inline-style ._inline-style._button-wrapper { margin-top:20px !important; margin-left:0 !important; }\n }\n #_form_33_ .iti.iti--allow-dropdown.iti--separate-dial-code { width:100%; }\n #_form_33_ .iti input { width:100%; height:32px; border:#979797 1px solid; border-radius:4px; }\n #_form_33_ .iti--separate-dial-code .iti__selected-flag { background-color:#fff; border-radius:4px; }\n #_form_33_ .iti--separate-dial-code .iti__selected-flag:hover { background-color:rgba(0, 0, 0, 0.05); }\n #_form_33_ .iti__country-list { border-radius:4px; margin-top:4px; min-width:460px; }\n #_form_33_ .iti__country-list--dropup { margin-bottom:4px; }\n #_form_33_ .phone-error-hidden { display:none; }\n #_form_33_ .phone-error { color:#e40e49; }\n #_form_33_ .phone-input-error { border:1px solid #e40e49 !important; }\n\n #_form_33_ ._x56790423 ._form-title { text-align:center; font-size:30px; margin-bottom:15px; line-height:40px; }\n #_form_33_ ._x71349443 input { border-radius:0 !important; padding:10px 15px !important; font-family:cfm-regular, sans-serif !important; font-size:16px !important; background-color:#fff; }\n #_form_33_ ._x98995844 input { border-radius:0 !important; padding:10px 15px !important; font-family:cfm-regular, sans-serif !important; font-size:16px !important; background-color:#fff; }\n #_form_33_ ._submit { background-color:#111 important; color:#fff !important; font-family:cfm-semibold !important; padding:10px 70px 10px 70px; font-size:20px !important; letter-spacing:0.5px !important; border:0px; width:100%; -webkit-box-shadow:0 0 15px #e01f2d; -moz-box-shadow:0 0 15px #e01f2d; -o-box-shadow:0 0 15px #e01f2d; box-shadow:0 0 15px #e01f2d; -webkit-animation-delay:0s; -webkit-animation-duration:4s; -webkit-animation-name:bg-glowbtn; -webkit-animation-fill-mode:forwards; -webkit-animation-timing:cubic-bezier(0.215, 0.61, 0.355, 1); -webkit-animation-iteration-count:infinite; }\n @keyframes bg-glowbtn { 0%,100% { -webkit-box-shadow:0 0 15px #e01f2d; -moz-box-shadow:0 0 15px #e01f2d; -o-box-shadow:0 0 15px #e01f2d; box-shadow:0 0 15px #e01f2d; background-color:#e01f2d; border-color:#e01f2d; }\n 50% { -webkit-box-shadow:0 0 15px #6c2294; -moz-box-shadow:0 0 15px #6c2294; -o-box-shadow:0 0 15px #6c2294; box-shadow:0 0 15px #6c2294; background-color:#6c2294; border-color:#6c2294; }\n }\n</style>\n<form method=\"POST\" action=\"https://lostaudio.activehosted.com/proc.php\" id=\"_form_33_\" class=\"_form _form_33 _inline-form  \" novalidate>\n  <input type=\"hidden\" name=\"u\" value=\"33\" />\n  <input type=\"hidden\" name=\"f\" value=\"33\" />\n  <input type=\"hidden\" name=\"s\" />\n  <input type=\"hidden\" name=\"c\" value=\"0\" />\n  <input type=\"hidden\" name=\"m\" value=\"0\" />\n  <input type=\"hidden\" name=\"act\" value=\"sub\" />\n  <input type=\"hidden\" name=\"v\" value=\"2\" />\n  <input type=\"hidden\" name=\"or\" value=\"1111809790c02bdf0f9b616000f924fc\" />\n  <div class=\"_form-content\">\n    <div class=\"_form_element _x56790423 _full_width _clear\" >\n      <div class=\"_form-title\">\n        Complete the form below to download the Virtual Demo.\n      </div>\n    </div>\n    <div class=\"_form_element _x71349443 _full_width \" >\n      <label for=\"fullname\" class=\"_form-label\">\n      </label>\n      <div class=\"_field-wrapper\">\n        <input type=\"text\" id=\"fullname\" name=\"fullname\" placeholder=\"First Name*\" required/>\n      </div>\n    </div>\n    <div class=\"_form_element _x98995844 _full_width \" >\n      <label for=\"email\" class=\"_form-label\">\n      </label>\n      <div class=\"_field-wrapper\">\n        <input type=\"text\" id=\"email\" name=\"email\" placeholder=\"Email*\" required/>\n      </div>\n    </div>\n    <div class=\"_button-wrapper _full_width\">\n      <button id=\"_form_33_submit\" class=\"glow-btn\" type=\"submit\">\n        Submit\n      </button>\n    </div>\n    <div class=\"_clear-element\">\n    </div>\n  </div>\n  <div class=\"_form-thank-you\" style=\"display:none;\">\n  </div>\n</form><script type=\"text/javascript\">\nwindow.cfields = [];\nwindow._show_thank_you = function(id, message, trackcmp_url, email) {\n  var form = document.getElementById('_form_' + id + '_'), thank_you = form.querySelector('._form-thank-you');\n  form.querySelector('._form-content').style.display = 'none';\n  thank_you.innerHTML = message;\n  thank_you.style.display = 'block';\n  const vgoAlias = typeof visitorGlobalObjectAlias === 'undefined' ? 'vgo' : visitorGlobalObjectAlias;\n  var visitorObject = window[vgoAlias];\n  if (email && typeof visitorObject !== 'undefined') {\n    visitorObject('setEmail', email);\n    visitorObject('update');\n  } else if (typeof(trackcmp_url) != 'undefined' && trackcmp_url) {\n    // Site tracking URL to use after inline form submission.\n    _load_script(trackcmp_url);\n  }\n  if (typeof window._form_callback !== 'undefined') window._form_callback(id);\n};\nwindow._show_error = function(id, message, html) {\n  var form = document.getElementById('_form_' + id + '_'), err = document.createElement('div'), button = form.querySelector('button'), old_error = form.querySelector('._form_error');\n  if (old_error) old_error.parentNode.removeChild(old_error);\n  err.innerHTML = message;\n  err.className = '_error-inner _form_error _no_arrow';\n  var wrapper = document.createElement('div');\n  wrapper.className = '_form-inner';\n  wrapper.appendChild(err);\n  button.parentNode.insertBefore(wrapper, button);\n  document.querySelector('[id^=\"_form\"][id$=\"_submit\"]').disabled = false;\n  if (html) {\n    var div = document.createElement('div');\n    div.className = '_error-html';\n    div.innerHTML = html;\n    err.appendChild(div);\n  }\n};\nwindow._load_script = function(url, callback, isSubmit) {\n  var head = document.querySelector('head'), script = document.createElement('script'), r = false;\n  script.type = 'text/javascript';\n  script.charset = 'utf-8';\n  script.src = url;\n  if (callback) {\n    script.onload = script.onreadystatechange = function() {\n      if (!r && (!this.readyState || this.readyState == 'complete')) {\n        r = true;\n        callback();\n      }\n    };\n  }\n  script.onerror = function() {\n    if (isSubmit) {\n      if (script.src.length > 10000) {\n        _show_error(\"33\", \"Sorry, your submission failed. Please shorten your responses and try again.\");\n      } else {\n        _show_error(\"33\", \"Sorry, your submission failed. Please try again.\");\n      }\n    }\n  }\n\n  head.appendChild(script);\n};\n(function() {\n  if (window.location.search.search(\"excludeform\") !== -1) return false;\n  var getCookie = function(name) {\n    var match = document.cookie.match(new RegExp('(^|; )' + name + '=([^;]+)'));\n    return match ? match[2] : null;\n  }\n  var setCookie = function(name, value) {\n    var now = new Date();\n    var time = now.getTime();\n    var expireTime = time + 1000 * 60 * 60 * 24 * 365;\n    now.setTime(expireTime);\n    document.cookie = name + '=' + value + '; expires=' + now + ';path=/; Secure; SameSite=Lax;';// cannot be HttpOnly\n  }\n      var addEvent = function(element, event, func) {\n    if (element.addEventListener) {\n      element.addEventListener(event, func);\n    } else {\n      var oldFunc = element['on' + event];\n      element['on' + event] = function() {\n        oldFunc.apply(this, arguments);\n        func.apply(this, arguments);\n      };\n    }\n  }\n  var _removed = false;\n  var form_to_submit = document.getElementById('_form_33_');\n  var allInputs = form_to_submit.querySelectorAll('input, select, textarea'), tooltips = [], submitted = false;\n\n  var getUrlParam = function(name) {\n    var params = new URLSearchParams(window.location.search);\n    return params.get(name) || false;\n  };\n\n  for (var i = 0; i < allInputs.length; i++) {\n    var regexStr = \"field\\\\[(\\\\d+)\\\\]\";\n    var results = new RegExp(regexStr).exec(allInputs[i].name);\n    if (results != undefined) {\n      allInputs[i].dataset.name = window.cfields[results[1]];\n    } else {\n      allInputs[i].dataset.name = allInputs[i].name;\n    }\n    var fieldVal = getUrlParam(allInputs[i].dataset.name);\n\n    if (fieldVal) {\n      if (allInputs[i].dataset.autofill === \"false\") {\n        continue;\n      }\n      if (allInputs[i].type == \"radio\" || allInputs[i].type == \"checkbox\") {\n        if (allInputs[i].value == fieldVal) {\n          allInputs[i].checked = true;\n        }\n      } else {\n        allInputs[i].value = fieldVal;\n      }\n    }\n  }\n\n  var remove_tooltips = function() {\n    for (var i = 0; i < tooltips.length; i++) {\n      tooltips[i].tip.parentNode.removeChild(tooltips[i].tip);\n    }\n    tooltips = [];\n  };\n  var remove_tooltip = function(elem) {\n    for (var i = 0; i < tooltips.length; i++) {\n      if (tooltips[i].elem === elem) {\n        tooltips[i].tip.parentNode.removeChild(tooltips[i].tip);\n        tooltips.splice(i, 1);\n        return;\n      }\n    }\n  };\n  var create_tooltip = function(elem, text) {\n    var tooltip = document.createElement('div'), arrow = document.createElement('div'), inner = document.createElement('div'), new_tooltip = {};\n    if (elem.type != 'radio' && elem.type != 'checkbox') {\n      tooltip.className = '_error';\n      arrow.className = '_error-arrow';\n      inner.className = '_error-inner';\n      inner.innerHTML = text;\n      tooltip.appendChild(arrow);\n      tooltip.appendChild(inner);\n      elem.parentNode.appendChild(tooltip);\n    } else {\n      tooltip.className = '_error-inner _no_arrow';\n      tooltip.innerHTML = text;\n      elem.parentNode.insertBefore(tooltip, elem);\n      new_tooltip.no_arrow = true;\n    }\n    new_tooltip.tip = tooltip;\n    new_tooltip.elem = elem;\n    tooltips.push(new_tooltip);\n    return new_tooltip;\n  };\n  var resize_tooltip = function(tooltip) {\n    var rect = tooltip.elem.getBoundingClientRect();\n    var doc = document.documentElement, scrollPosition = rect.top - ((window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0));\n    if (scrollPosition < 40) {\n      tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + ' _below';\n    } else {\n      tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + ' _above';\n    }\n  };\n  var resize_tooltips = function() {\n    if (_removed) return;\n    for (var i = 0; i < tooltips.length; i++) {\n      if (!tooltips[i].no_arrow) resize_tooltip(tooltips[i]);\n    }\n  };\n  var validate_field = function(elem, remove) {\n    var tooltip = null, value = elem.value, no_error = true;\n    remove ? remove_tooltip(elem) : false;\n    if (elem.type != 'checkbox') elem.className = elem.className.replace(/ ?_has_error ?/g, '');\n    if (elem.getAttribute('required') !== null) {\n      if (elem.type == 'radio' || (elem.type == 'checkbox' && /any/.test(elem.className))) {\n        var elems = form_to_submit.elements[elem.name];\n        if (!(elems instanceof NodeList || elems instanceof HTMLCollection) || elems.length <= 1) {\n          no_error = elem.checked;\n        }\n        else {\n          no_error = false;\n          for (var i = 0; i < elems.length; i++) {\n            if (elems[i].checked) no_error = true;\n          }\n        }\n        if (!no_error) {\n          tooltip = create_tooltip(elem, \"Please select an option.\");\n        }\n      } else if (elem.type =='checkbox') {\n        var elems = form_to_submit.elements[elem.name], found = false, err = [];\n        no_error = true;\n        for (var i = 0; i < elems.length; i++) {\n          if (elems[i].getAttribute('required') === null) continue;\n          if (!found && elems[i] !== elem) return true;\n          found = true;\n          elems[i].className = elems[i].className.replace(/ ?_has_error ?/g, '');\n          if (!elems[i].checked) {\n            no_error = false;\n            elems[i].className = elems[i].className + ' _has_error';\n            err.push(\"Checking %s is required\".replace(\"%s\", elems[i].value));\n          }\n        }\n        if (!no_error) {\n          tooltip = create_tooltip(elem, err.join('<br/>'));\n        }\n      } else if (elem.tagName == 'SELECT') {\n        var selected = true;\n        if (elem.multiple) {\n          selected = false;\n          for (var i = 0; i < elem.options.length; i++) {\n            if (elem.options[i].selected) {\n              selected = true;\n              break;\n            }\n          }\n        } else {\n          for (var i = 0; i < elem.options.length; i++) {\n            if (elem.options[i].selected && (!elem.options[i].value || (elem.options[i].value.match(/\\n/g)))) {\n              selected = false;\n            }\n          }\n        }\n        if (!selected) {\n          elem.className = elem.className + ' _has_error';\n          no_error = false;\n          tooltip = create_tooltip(elem, \"Please select an option.\");\n        }\n      } else if (value === undefined || value === null || value === '') {\n        elem.className = elem.className + ' _has_error';\n        no_error = false;\n        tooltip = create_tooltip(elem, \"This field is required.\");\n      }\n    }\n    if (no_error && (elem.id == 'field[]' || elem.id == 'ca[11][v]')) {\n      if (elem.className.includes('phone-input-error')) {\n        elem.className = elem.className + ' _has_error';\n        no_error = false;\n      }\n    }\n    if (no_error && elem.name == 'email') {\n      if (!value.match(/^[\\+_a-z0-9-'&=]+(\\.[\\+_a-z0-9-']+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,})$/i)) {\n        elem.className = elem.className + ' _has_error';\n        no_error = false;\n        tooltip = create_tooltip(elem, \"Enter a valid email address.\");\n      }\n    }\n    if (no_error && /date_field/.test(elem.className)) {\n      if (!value.match(/^\\d\\d\\d\\d-\\d\\d-\\d\\d$/)) {\n        elem.className = elem.className + ' _has_error';\n        no_error = false;\n        tooltip = create_tooltip(elem, \"Enter a valid date.\");\n      }\n    }\n    tooltip ? resize_tooltip(tooltip) : false;\n    return no_error;\n  };\n  var needs_validate = function(el) {\n        if(el.getAttribute('required') !== null){\n            return true\n        }\n        if(el.name === 'email' && el.value !== \"\"){\n            return true\n        }\n\n    if((el.id == 'field[]' || el.id == 'ca[11][v]') && el.className.includes('phone-input-error')){\n            return true\n        }\n\n        return false\n  };\n  var validate_form = function(e) {\n    var err = form_to_submit.querySelector('._form_error'), no_error = true;\n    if (!submitted) {\n      submitted = true;\n      for (var i = 0, len = allInputs.length; i < len; i++) {\n        var input = allInputs[i];\n        if (needs_validate(input)) {\n          if (input.type == 'tel') {\n            addEvent(input, 'blur', function() {\n              this.value = this.value.trim();\n              validate_field(this, true);\n            });\n          }\n          if (input.type == 'text' || input.type == 'number' || input.type == 'time') {\n            addEvent(input, 'blur', function() {\n              this.value = this.value.trim();\n              validate_field(this, true);\n            });\n            addEvent(input, 'input', function() {\n              validate_field(this, true);\n            });\n          } else if (input.type == 'radio' || input.type == 'checkbox') {\n            (function(el) {\n              var radios = form_to_submit.elements[el.name];\n              for (var i = 0; i < radios.length; i++) {\n                addEvent(radios[i], 'click', function() {\n                  validate_field(el, true);\n                });\n              }\n            })(input);\n          } else if (input.tagName == 'SELECT') {\n            addEvent(input, 'change', function() {\n              validate_field(this, true);\n            });\n          } else if (input.type == 'textarea'){\n            addEvent(input, 'input', function() {\n              validate_field(this, true);\n            });\n          }\n        }\n      }\n    }\n    remove_tooltips();\n    for (var i = 0, len = allInputs.length; i < len; i++) {\n      var elem = allInputs[i];\n      if (needs_validate(elem)) {\n        if (elem.tagName.toLowerCase() !== \"select\") {\n          elem.value = elem.value.trim();\n        }\n        validate_field(elem) ? true : no_error = false;\n      }\n    }\n    if (!no_error && e) {\n      e.preventDefault();\n    }\n    resize_tooltips();\n    return no_error;\n  };\n  addEvent(window, 'resize', resize_tooltips);\n  addEvent(window, 'scroll', resize_tooltips);\n\n  var hidePhoneInputError = function(inputId) {\n    var errorMessage =  document.getElementById(\"error-msg-\" + inputId);\n    var input = document.getElementById(inputId);\n    errorMessage.classList.remove(\"phone-error\");\n    errorMessage.classList.add(\"phone-error-hidden\");\n    input.classList.remove(\"phone-input-error\");\n  };\n\n  var initializePhoneInput = function(input, defaultCountry) {\n    return window.intlTelInput(input, {\n      utilsScript: \"https://unpkg.com/intl-tel-input@17.0.18/build/js/utils.js\",\n      autoHideDialCode: false,\n      separateDialCode: true,\n      initialCountry: defaultCountry,\n      preferredCountries: []\n    });\n  }\n\n  var setPhoneInputEventListeners = function(inputId, input, iti) {\n    input.addEventListener('blur', function() {\n      var errorMessage = document.getElementById(\"error-msg-\" + inputId);\n      if (input.value.trim()) {\n        if (iti.isValidNumber()) {\n          iti.setNumber(iti.getNumber());\n          if (errorMessage.classList.contains(\"phone-error\")){\n            hidePhoneInputError(inputId);\n          }\n        } else {\n          showPhoneInputError(inputId)\n        }\n      } else {\n        if (errorMessage.classList.contains(\"phone-error\")){\n          hidePhoneInputError(inputId);\n        }\n      }\n    });\n\n    input.addEventListener(\"countrychange\", function() {\n      iti.setNumber('');\n    });\n\n    input.addEventListener(\"keydown\", function(e) {\n        var charCode = (e.which) ? e.which : e.keyCode;\n        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 8) {\n               e.preventDefault();\n      }\n     });\n  };\n\n  var showPhoneInputError = function(inputId) {\n    var errorMessage =  document.getElementById(\"error-msg-\" + inputId);\n    var input = document.getElementById(inputId);\n    errorMessage.classList.add(\"phone-error\");\n    errorMessage.classList.remove(\"phone-error-hidden\");\n    input.classList.add(\"phone-input-error\");\n  };\n\n\n    var _form_serialize = function(form){if(!form||form.nodeName!==\"FORM\"){return }var i,j,q=[];for(i=0;i<form.elements.length;i++){if(form.elements[i].name===\"\"){continue}switch(form.elements[i].nodeName){case\"INPUT\":switch(form.elements[i].type){case\"tel\":q.push(form.elements[i].name+\"=\"+encodeURIComponent(form.elements[i].previousSibling.querySelector('div.iti__selected-dial-code').innerText)+encodeURIComponent(\" \")+encodeURIComponent(form.elements[i].value));break;case\"text\":case\"number\":case\"date\":case\"time\":case\"hidden\":case\"password\":case\"button\":case\"reset\":case\"submit\":q.push(form.elements[i].name+\"=\"+encodeURIComponent(form.elements[i].value));break;case\"checkbox\":case\"radio\":if(form.elements[i].checked){q.push(form.elements[i].name+\"=\"+encodeURIComponent(form.elements[i].value))}break;case\"file\":break}break;case\"TEXTAREA\":q.push(form.elements[i].name+\"=\"+encodeURIComponent(form.elements[i].value));break;case\"SELECT\":switch(form.elements[i].type){case\"select-one\":q.push(form.elements[i].name+\"=\"+encodeURIComponent(form.elements[i].value));break;case\"select-multiple\":for(j=0;j<form.elements[i].options.length;j++){if(form.elements[i].options[j].selected){q.push(form.elements[i].name+\"=\"+encodeURIComponent(form.elements[i].options[j].value))}}break}break;case\"BUTTON\":switch(form.elements[i].type){case\"reset\":case\"submit\":case\"button\":q.push(form.elements[i].name+\"=\"+encodeURIComponent(form.elements[i].value));break}break}}return q.join(\"&\")};\n  var form_submit = function(e) {\n    e.preventDefault();\n    if (validate_form()) {\n      // use this trick to get the submit button & disable it using plain javascript\n      document.querySelector('#_form_33_submit').disabled = true;\n            var serialized = _form_serialize(document.getElementById('_form_33_')).replace(/%0A/g, '\\\\n');\n      var err = form_to_submit.querySelector('._form_error');\n      err ? err.parentNode.removeChild(err) : false;\n      _load_script('https://lostaudio.activehosted.com/proc.php?' + serialized + '&jsonp=true', null, true);\n    }\n    return false;\n  };\n  addEvent(form_to_submit, 'submit', form_submit);\n})();\n\n</script>",
+            "btn_text": "Free Download",
+            "button_color": "btn--primary",
+            "button_style": "btn--soft btn--long uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "8a2a9bfc-3d5d-4554-8a64-6bae65605cf3",
+        "template--15713441349787__277d7e77-6a26-455f-8d0c-630a8f9cc3c6-1667433893a8350741-0"
+      ],
+      "settings": {
+        "width": "wrapper",
+        "bg": "palette--dark bg--invert",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "ed10b5d0-c00f-40bb-b27d-5ac8f0e6d91d": {
+      "type": "section-custom-content",
+      "blocks": {
+        "69fc35e7-ffe3-40a9-94fb-01a1e2e198f3": {
+          "type": "video",
+          "settings": {
+            "object_position": "center-center",
+            "image": "shopify://shop_images/Untitled-3.png",
+            "bg_position": "center-center",
+            "video_link": "https://www.youtube.com/watch?v=ggWr54VlJZc&t=1s",
+            "popup_text": "",
+            "kicker": "",
+            "title": "",
+            "richtext": "",
+            "text_align": "align--middle-center",
+            "text_color": "text--white",
+            "overlay_opacity": 15,
+            "overlay_color": "#000000",
+            "link_text": "",
+            "link": "",
+            "button_color": "btn--white",
+            "button_style": "btn"
+          }
+        }
+      },
+      "block_order": ["69fc35e7-ffe3-40a9-94fb-01a1e2e198f3"],
+      "settings": {
+        "height": "use_screen_one_half",
+        "brick_gutter": 0,
+        "borders": false,
+        "width": "wrapper",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "product_reviews_enable": false,
+        "bg": "palette--light bg--accent",
+        "width": "wrapper",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "related": {
+      "type": "related",
+      "disabled": true,
+      "settings": {
+        "heading": "You might also like",
+        "bg": "palette--dark bg--invert--accent",
+        "grid_large": 4,
+        "grid_medium": 3,
+        "grid_small": 1.2,
+        "related_products_enable": true,
+        "limit": 6,
+        "product_recommendations_heading": "Related products",
+        "show_recently_viewed": true,
+        "product_recently_limit": 6,
+        "product_recently_minimum": 4,
+        "product_recently_heading": "Recently viewed",
+        "width": "wrapper",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "171303205955be9f2c": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_Bb7Pn9": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 20,
+            "hide_thumbnails": false,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": ["loox_reviews_loox_dynamic_section_Bb7Pn9"],
+      "settings": {
+        "text_color": "text--neutral",
+        "bg": "palette--dark bg--invert",
+        "width": "wrapper",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "147adc68-e178-497d-ab2d-3f139fd61748",
+    "c4af2acc-a86d-43f9-b029-0baf864dd610",
+    "5468793a-2301-4bd7-a5a6-3d0b3aa44e1a",
+    "2cb78737-3cb6-40b9-890b-7690f8597b9a",
+    "8d966760-fb4b-4a3b-894d-90d43159719d",
+    "277d7e77-6a26-455f-8d0c-630a8f9cc3c6",
+    "ed10b5d0-c00f-40bb-b27d-5ac8f0e6d91d",
+    "reviews",
+    "related",
+    "171303205955be9f2c"
+  ]
+}
