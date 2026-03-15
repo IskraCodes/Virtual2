@@ -347,6 +347,8 @@
       .disc-wrapper {
         position: relative;
         width: 920px;
+        height: 480px;
+        max-width: 100%;
         margin-bottom: -40px;
         overflow: visible;
         z-index: 3;
@@ -356,7 +358,6 @@
       /* ---- Sacred Geometry overlay on disc ---- */
       .sacred-geometry {
         position: absolute;
-        /* center of disc: left 50%, top = padding-top(60) + half disc(360) = 420px */
         top: 420px;
         left: 50%;
         width: 820px;
@@ -417,7 +418,10 @@
 
       /* ---- 2D CD Disc ---- */
       .disc-container {
-        position: relative;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
         width: 920px;
         height: 480px;
         padding-top: 60px;
@@ -1651,13 +1655,10 @@
         .credits-grid {
           grid-template-columns: 1fr;
         }
-        .disc-container {
-          width: 400px;
-          height: 200px;
-        }
-        .cd-disc {
-          width: 400px;
-          height: 400px;
+        .disc-wrapper {
+          transform: scale(0.5);
+          transform-origin: top center;
+          margin-bottom: -200px;
         }
         .features__grid {
           grid-template-columns: repeat(2, 1fr);
@@ -1679,19 +1680,15 @@
           border-right: none;
           border-bottom: 1px solid rgba(30, 60, 120, 0.3);
         }
+        .disc-wrapper {
+          transform: scale(0.38);
+          margin-bottom: -260px;
+        }
         .hud-bar__ticks {
           display: none;
         }
         .hero-title {
           letter-spacing: 3px;
-        }
-        .disc-container {
-          width: 300px;
-          height: 150px;
-        }
-        .cd-disc {
-          width: 300px;
-          height: 300px;
         }
         .stats-row {
           grid-template-columns: 1fr 1fr;
@@ -3260,81 +3257,115 @@
         let w, h;
         const LINE_COUNT = 5;
         const BASE_SPEED = 0.05;
+        const INV_BASE = 1 / BASE_SPEED;
+        const GAUSS_DENOM = 2 * 0.22 * 0.22; // pre-computed 2*sigma^2
+        const STEP = 3; // px step (was 2)
         let time = 0;
 
         // Speed ramp state
         let currentSpeed = BASE_SPEED;
         let targetSpeed = BASE_SPEED;
         let rampTimer = 0;
-        let nextRampAt = 3 + Math.random() * 5; // seconds until next ramp event
+        let nextRampAt = 3 + Math.random() * 5;
 
         function updateSpeedRamp(dt) {
           rampTimer += dt;
           if (rampTimer >= nextRampAt) {
             rampTimer = 0;
-            // Randomly pick: freeze, burst, or return to normal
             const roll = Math.random();
             if (roll < 0.4) {
-              // Near-freeze
               targetSpeed = BASE_SPEED * 0.02;
               nextRampAt = 1.5 + Math.random() * 2.5;
             } else if (roll < 0.7) {
-              // Speed burst
-              targetSpeed = BASE_SPEED * 8 + Math.random() * BASE_SPEED * 12;
+              targetSpeed = BASE_SPEED * (8 + Math.random() * 12);
               nextRampAt = 0.6 + Math.random() * 1.2;
             } else {
-              // Back to normal
               targetSpeed = BASE_SPEED;
               nextRampAt = 3 + Math.random() * 6;
             }
           }
-          // Smooth lerp toward target
-          const lerpRate = 0.025;
-          currentSpeed += (targetSpeed - currentSpeed) * lerpRate;
+          currentSpeed += (targetSpeed - currentSpeed) * 0.025;
         }
 
-        // Simple hash-based noise
+        // Noise — hash-based, inlined for hot path
         function hash(n) {
-          let x = Math.sin(n) * 43758.5453;
+          const x = Math.sin(n) * 43758.5453;
           return x - Math.floor(x);
         }
 
-        function smoothNoise(x) {
-          const i = Math.floor(x);
-          const f = x - i;
-          const t = f * f * (3 - 2 * f);
-          return hash(i) * (1 - t) + hash(i + 1) * t;
+        function noise2(x) { // 2-octave
+          let i = Math.floor(x);
+          let f = x - i; f = f * f * (3 - 2 * f);
+          let v = hash(i) * (1 - f) + hash(i + 1) * f;
+          x *= 2.1;
+          i = Math.floor(x);
+          f = x - i; f = f * f * (3 - 2 * f);
+          v += (hash(i) * (1 - f) + hash(i + 1) * f) * 0.5;
+          return v / 1.5;
         }
 
-        function noise(x, octaves) {
-          let val = 0,
-            amp = 1,
-            freq = 1,
-            max = 0;
-          for (let o = 0; o < octaves; o++) {
-            val += smoothNoise(x * freq) * amp;
-            max += amp;
-            amp *= 0.5;
-            freq *= 2.1;
+        function noise3(x) { // 3-octave
+          let val = 0, amp = 1, freq = 1, max = 0;
+          for (let o = 0; o < 3; o++) {
+            const xf = x * freq;
+            const i = Math.floor(xf);
+            const f = xf - i;
+            const t = f * f * (3 - 2 * f);
+            val += (hash(i) * (1 - t) + hash(i + 1) * t) * amp;
+            max += amp; amp *= 0.5; freq *= 2.1;
           }
           return val / max;
+        }
+
+        function noise4(x) { // 4-octave
+          let val = 0, amp = 1, freq = 1, max = 0;
+          for (let o = 0; o < 4; o++) {
+            const xf = x * freq;
+            const i = Math.floor(xf);
+            const f = xf - i;
+            const t = f * f * (3 - 2 * f);
+            val += (hash(i) * (1 - t) + hash(i + 1) * t) * amp;
+            max += amp; amp *= 0.5; freq *= 2.1;
+          }
+          return val / max;
+        }
+
+        // Pre-compute per-line constants
+        const lineSeeds = new Float64Array(LINE_COUNT);
+        const lineColors = []; // cached color strings
+        for (let li = 0; li < LINE_COUNT; li++) {
+          lineSeeds[li] = li * 17.3 + 5.7;
+          const t = li / (LINE_COUNT - 1);
+          const r = (40 + t * 215) | 0;
+          const g = (255 - t * 100) | 0;
+          const b = (200 - t * 170) | 0;
+          lineColors.push({
+            stroke: `rgba(${r},${g},${b},0.7)`,
+            shadow: `rgba(${r},${g},${b},0.4)`
+          });
+        }
+
+        // Pre-compute Gaussian envelope lookup (256 entries for 0..1 xNorm)
+        const ENVELOPE_RES = 256;
+        const envelopeLUT = new Float64Array(ENVELOPE_RES);
+        for (let i = 0; i < ENVELOPE_RES; i++) {
+          const xNorm = i / (ENVELOPE_RES - 1);
+          const dx = xNorm - 0.5;
+          envelopeLUT[i] = Math.exp(-(dx * dx) / GAUSS_DENOM);
         }
 
         // Crosshair trackers
         const crosshairs = [];
         for (let i = 0; i < 6; i++) {
           crosshairs.push({
-            lineIdx: Math.floor(Math.random() * LINE_COUNT),
-            phase: Math.random() * 200,
-            alive: true,
+            lineIdx: (Math.random() * LINE_COUNT) | 0,
+            phase: Math.random() * 200
           });
         }
 
         // Sweep lines
-        let sweepX = 0.3,
-          sweepXDir = 0.0003;
-        let sweepY = 0.4,
-          sweepYDir = 0.00025;
+        let sweepX = 0.3, sweepXDir = 0.0003;
+        let sweepY = 0.4, sweepYDir = 0.00025;
 
         function resize() {
           const rect = canvas.parentElement.getBoundingClientRect();
@@ -3344,156 +3375,136 @@
         resize();
         window.addEventListener("resize", resize);
 
-        function getY(lineIdx, xNorm, t, intensity) {
-          const seed = lineIdx * 17.3 + 5.7;
-
-          // Constant base noise — always-active waveform data
-          const baseFreq = xNorm * 12 + t * 3.2 + seed;
-          const base =
-            (noise(baseFreq, 3) - 0.5) * 0.35 +
-            Math.sin(xNorm * 40 + t * 5.5 + seed) * 0.08 +
-            (noise(xNorm * 60 + t * 8 + seed * 1.3, 2) - 0.5) * 0.15;
-
-          // Gaussian envelope for center amplification
-          const cx = 0.5;
-          const sigma = 0.22;
-          const dx = xNorm - cx;
-          const envelope = Math.exp(-(dx * dx) / (2 * sigma * sigma));
-
-          // Violent center distortion
-          const n1 = noise(xNorm * 6 + t * 1.2 + seed, 4);
-          const n2 = noise(xNorm * 14 + t * 2.0 + seed * 0.7, 3);
-          const n3 = Math.sin(xNorm * 30 + t * 4.0 + lineIdx * 1.1) * 0.4;
-          const n4 = Math.sin(xNorm * 55 + t * 7 + seed * 0.4) * 0.2;
-          const centerDistortion =
-            (n1 - 0.5) * 2.2 + (n2 - 0.5) * 1.4 + n3 + n4;
-
-          return (base + centerDistortion * envelope) * intensity;
-        }
-
         function draw() {
           const dt = 0.016;
           updateSpeedRamp(dt);
-          time += dt * (currentSpeed / BASE_SPEED);
+          const speedRatio = currentSpeed * INV_BASE;
+          time += dt * speedRatio;
           const scrollOffset = time * BASE_SPEED;
 
-          // Intensity: inverse of speed ratio — slow = erratic, fast = flat
-          const speedRatio = currentSpeed / BASE_SPEED;
-          const intensity = Math.max(0.05, 1.0 / Math.max(speedRatio, 0.1));
-          // Clamp to a sensible range
-          const clampedIntensity = Math.min(intensity, 3.0);
+          // Intensity: inverse of speed — slow = erratic, fast = flat
+          const clampedIntensity = Math.min(Math.max(0.05, 1.0 / Math.max(speedRatio, 0.1)), 3.0);
 
           ctx.clearRect(0, 0, w, h);
-
-          // Dark background fill
-          ctx.fillStyle = "rgba(8, 12, 24, 0.95)";
+          ctx.fillStyle = "rgba(8,12,24,0.95)";
           ctx.fillRect(0, 0, w, h);
 
           const pad = 30;
           const graphW = w - pad * 2;
           const graphH = h - pad * 2;
           const lineSpacing = graphH / (LINE_COUNT + 1);
+          const amp = lineSpacing * 2.5;
+          const invGraphW = 1 / graphW;
+          const gridStep = graphW * 0.1;
 
-          // Bounding box
-          ctx.strokeStyle = "rgba(80, 180, 220, 0.12)";
+          // Bounding box + grid in one batch
+          ctx.strokeStyle = "rgba(80,180,220,0.12)";
           ctx.lineWidth = 1;
           ctx.strokeRect(pad, pad, graphW, graphH);
-
-          // Grid lines (faint)
-          ctx.strokeStyle = "rgba(80, 180, 220, 0.04)";
+          ctx.strokeStyle = "rgba(80,180,220,0.04)";
           ctx.lineWidth = 0.5;
+          ctx.beginPath();
           for (let gx = 0; gx < 10; gx++) {
-            const x = pad + (graphW / 10) * gx;
-            ctx.beginPath();
+            const x = pad + gridStep * gx;
             ctx.moveTo(x, pad);
             ctx.lineTo(x, pad + graphH);
-            ctx.stroke();
           }
+          ctx.stroke(); // single draw call for all grid lines
 
           // Sweep lines
           sweepX += sweepXDir;
           if (sweepX > 0.8 || sweepX < 0.2) sweepXDir *= -1;
           sweepY += sweepYDir;
           if (sweepY > 0.75 || sweepY < 0.25) sweepYDir *= -1;
-
-          ctx.strokeStyle = "rgba(60, 140, 255, 0.2)";
+          ctx.strokeStyle = "rgba(60,140,255,0.2)";
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(pad + graphW * sweepX, pad);
           ctx.lineTo(pad + graphW * sweepX, pad + graphH);
-          ctx.stroke();
-          ctx.beginPath();
           ctx.moveTo(pad, pad + graphH * sweepY);
           ctx.lineTo(pad + graphW, pad + graphH * sweepY);
-          ctx.stroke();
+          ctx.stroke(); // single call for both sweeps
+
+          // Pre-compute crosshair target pixel positions (once per frame)
+          const chTargets = new Int32Array(crosshairs.length);
+          for (let ci = 0; ci < crosshairs.length; ci++) {
+            const chX = (((crosshairs[ci].phase - scrollOffset) % 1.0) + 1.0) % 1.0;
+            chTargets[ci] = (chX * graphW + 0.5) | 0;
+          }
+
+          // Reusable crosshair results (max one per crosshair per frame)
+          const chResults = new Array(crosshairs.length);
+          for (let ci = 0; ci < crosshairs.length; ci++) chResults[ci] = null;
 
           // Draw waveform lines
-          const step = 2;
-          const crosshairPositions = [];
-
           for (let li = 0; li < LINE_COUNT; li++) {
             const baseY = pad + lineSpacing * (li + 1);
-            const t = li / (LINE_COUNT - 1);
-            // Color gradient: back (low index) = teal, front (high index) = orange
-            const r = Math.round(40 + t * 215);
-            const g = Math.round(255 - t * 100);
-            const b = Math.round(200 - t * 170);
+            const seed = lineSeeds[li];
+            const col = lineColors[li];
 
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.7)`;
+            ctx.strokeStyle = col.stroke;
             ctx.lineWidth = 1.2;
-            ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.4)`;
+            ctx.shadowColor = col.shadow;
             ctx.shadowBlur = 6;
-
             ctx.beginPath();
-            let prevPx, prevPy;
-            for (let px = 0; px <= graphW; px += step) {
-              const xNorm = px / graphW;
+
+            for (let px = 0; px <= graphW; px += STEP) {
+              const xNorm = px * invGraphW;
               const scrolledX = xNorm + scrollOffset;
-              const amp = lineSpacing * 2.5;
-              const dy = getY(li, scrolledX, time, clampedIntensity) * amp;
+
+              // Envelope from LUT
+              const envIdx = (xNorm * (ENVELOPE_RES - 1) + 0.5) | 0;
+              const envelope = envelopeLUT[envIdx];
+
+              // Base noise (constant activity)
+              const baseFreq = scrolledX * 12 + time * 3.2 + seed;
+              const base =
+                (noise3(baseFreq) - 0.5) * 0.35 +
+                Math.sin(scrolledX * 40 + time * 5.5 + seed) * 0.08 +
+                (noise2(scrolledX * 60 + time * 8 + seed * 1.3) - 0.5) * 0.15;
+
+              // Center distortion
+              const n1 = noise4(scrolledX * 6 + time * 1.2 + seed);
+              const n2 = noise3(scrolledX * 14 + time * 2.0 + seed * 0.7);
+              const n3 = Math.sin(scrolledX * 30 + time * 4.0 + li * 1.1) * 0.4;
+              const n4 = Math.sin(scrolledX * 55 + time * 7 + seed * 0.4) * 0.2;
+              const centerDist = (n1 - 0.5) * 2.2 + (n2 - 0.5) * 1.4 + n3 + n4;
+
+              const dy = (base + centerDist * envelope) * clampedIntensity * amp;
               const x = pad + px;
               const y = baseY + dy;
 
-              if (px === 0) {
-                ctx.moveTo(x, y);
-              } else {
-                ctx.lineTo(x, y);
-              }
+              if (px === 0) ctx.moveTo(x, y);
+              else ctx.lineTo(x, y);
 
-              // Track positions for crosshairs
-              for (const ch of crosshairs) {
-                if (ch.lineIdx === li) {
-                  const chX = (((ch.phase - scrollOffset) % 1.0) + 1.0) % 1.0;
-                  const chPxTarget = Math.round(chX * graphW);
-                  if (Math.abs(px - chPxTarget) < step) {
-                    crosshairPositions.push({ x: x, y: y, a: ch });
+              // Check crosshairs (only for matching lines)
+              for (let ci = 0; ci < crosshairs.length; ci++) {
+                if (crosshairs[ci].lineIdx === li && chResults[ci] === null) {
+                  if (Math.abs(px - chTargets[ci]) < STEP) {
+                    chResults[ci] = { x: x, y: y };
                   }
                 }
               }
             }
             ctx.stroke();
-            ctx.shadowBlur = 0;
           }
-
-          // Crosshair markers
           ctx.shadowBlur = 0;
-          for (const cp of crosshairPositions) {
-            const sz = 6;
-            // Only show in center region
-            const xNorm = (cp.x - pad) / graphW;
-            const centerDist = Math.abs(xNorm - 0.5);
-            if (centerDist > 0.35) continue;
-            const alpha = Math.max(0, 1 - centerDist * 4);
 
-            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.8})`;
-            ctx.lineWidth = 1;
+          // Crosshair markers (batched into single path per alpha bucket)
+          ctx.lineWidth = 1;
+          for (let ci = 0; ci < chResults.length; ci++) {
+            const cp = chResults[ci];
+            if (!cp) continue;
+            const xNorm = (cp.x - pad) * invGraphW;
+            const cd = Math.abs(xNorm - 0.5);
+            if (cd > 0.35) continue;
+            const alpha = (1 - cd * 4) * 0.8;
+            ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
             ctx.beginPath();
-            ctx.moveTo(cp.x - sz, cp.y);
-            ctx.lineTo(cp.x + sz, cp.y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(cp.x, cp.y - sz);
-            ctx.lineTo(cp.x, cp.y + sz);
+            ctx.moveTo(cp.x - 6, cp.y);
+            ctx.lineTo(cp.x + 6, cp.y);
+            ctx.moveTo(cp.x, cp.y - 6);
+            ctx.lineTo(cp.x, cp.y + 6);
             ctx.stroke();
           }
 
