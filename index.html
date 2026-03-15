@@ -355,6 +355,44 @@
         pointer-events: none;
       }
 
+      /* ---- 3D Model Canvas behind disc ---- */
+      .metalheart-anchor {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .metalheart-canvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1400px;
+        height: 1400px;
+        transform: translate(-50%, -55%);
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.6;
+        -webkit-mask-image: radial-gradient(
+          ellipse at center,
+          white 20%,
+          rgba(255,255,255,0.6) 40%,
+          rgba(255,255,255,0.15) 60%,
+          transparent 75%
+        );
+        mask-image: radial-gradient(
+          ellipse at center,
+          white 20%,
+          rgba(255,255,255,0.6) 40%,
+          rgba(255,255,255,0.15) 60%,
+          transparent 75%
+        );
+      }
+
       /* ---- Sacred Geometry overlay on disc ---- */
       .sacred-geometry {
         position: absolute;
@@ -1801,6 +1839,9 @@
       <!-- Hero Section -->
       <section class="hero">
         <!-- Disc + Sacred Geometry wrapper -->
+        <div class="metalheart-anchor">
+          <canvas class="metalheart-canvas" id="metalheartCanvas"></canvas>
+        </div>
         <div class="disc-wrapper fade-in stagger-1">
           <div class="disc-container">
             <div class="cd-disc">
@@ -3521,6 +3562,148 @@
       initStars();
       initOscilloscope();
       loadShopifySDK();
+    </script>
+
+    <!-- Three.js for 3D metalheart model -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+    </script>
+    <script type="module">
+      import * as THREE from 'three';
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+      import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+      import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+      import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+      const canvas = document.getElementById('metalheartCanvas');
+      if (canvas) {
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          alpha: true,
+          antialias: true,
+          powerPreference: 'high-performance'
+        });
+        const CANVAS_SIZE = 1400;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        renderer.setSize(CANVAS_SIZE, CANVAS_SIZE);
+        renderer.setClearColor(0x000000, 0);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+
+        const scene = new THREE.Scene();
+
+        // Ultra-high FOV camera
+        const camera = new THREE.PerspectiveCamera(120, 1, 0.01, 100);
+
+        camera.position.set(0, 0, 1.2);
+
+        // Bloom post-processing
+        const composer = new EffectComposer(renderer);
+        composer.addPass(new RenderPass(scene, camera));
+        const bloomPass = new UnrealBloomPass(
+          new THREE.Vector2(CANVAS_SIZE, CANVAS_SIZE),
+          0.8,   // strength
+          0.4,   // radius
+          0.3    // threshold
+        );
+        composer.addPass(bloomPass);
+
+
+        // Lighting — dramatic rim/backlight
+        const ambientLight = new THREE.AmbientLight(0x334466, 0.4);
+        scene.add(ambientLight);
+
+        const rimLight = new THREE.DirectionalLight(0x88bbff, 2.5);
+        rimLight.position.set(-2, 1, -2);
+        scene.add(rimLight);
+
+        const keyLight = new THREE.DirectionalLight(0xddeeff, 1.8);
+        keyLight.position.set(2, 2, 3);
+        scene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(0x446688, 0.8);
+        fillLight.position.set(0, -2, 1);
+        scene.add(fillLight);
+
+        // Point lights for metallic reflections
+        const pointA = new THREE.PointLight(0x66aaff, 3, 8);
+        pointA.position.set(1.5, 0.5, 1);
+        scene.add(pointA);
+
+        const pointB = new THREE.PointLight(0x4488cc, 2, 8);
+        pointB.position.set(-1.5, -0.5, 0.5);
+        scene.add(pointB);
+
+        let model = null;
+
+        const loader = new GLTFLoader();
+        loader.load('metalheart.glb', (gltf) => {
+          model = gltf.scene;
+
+          // Center and scale the model
+          const box = new THREE.Box3().setFromObject(model);
+          const center = box.getCenter(new THREE.Vector3());
+          const size = box.getSize(new THREE.Vector3());
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const scale = 3.2 / maxDim;
+          model.scale.setScalar(scale);
+          model.position.sub(center.multiplyScalar(scale));
+
+          // Enhance materials for metallic look
+          model.traverse((child) => {
+            if (child.isMesh) {
+              child.material.metalness = 0.95;
+              child.material.roughness = 0.15;
+              child.material.envMapIntensity = 1.5;
+              if (child.material.color) {
+                child.material.color.lerp(new THREE.Color(0xaaccee), 0.2);
+              }
+            }
+          });
+
+          scene.add(model);
+        });
+
+        // Camera orbit + model rotation
+        const clock = new THREE.Clock();
+
+        function animate() {
+          requestAnimationFrame(animate);
+          const t = clock.getElapsedTime();
+
+          // Close orbit with ultra-wide FOV
+          const orbitRadius = 1.0 + Math.sin(t * 0.3) * 0.25;
+          const orbitSpeed = 0.15;
+          camera.position.x = Math.sin(t * orbitSpeed) * orbitRadius;
+          camera.position.z = Math.cos(t * orbitSpeed) * orbitRadius;
+          camera.position.y = Math.sin(t * 0.2) * 0.3;
+          camera.lookAt(0, 0, 0);
+
+          // Slow model self-rotation
+          if (model) {
+            model.rotation.y = t * 0.4;
+            model.rotation.x = Math.sin(t * 0.15) * 0.15;
+          }
+
+          // Animate point lights
+          pointA.position.x = Math.sin(t * 0.5) * 2;
+          pointA.position.z = Math.cos(t * 0.5) * 2;
+          pointB.position.x = Math.cos(t * 0.4) * 2;
+          pointB.position.y = Math.sin(t * 0.3) * 1.5;
+
+          // Pulsing bloom
+          bloomPass.strength = 0.8 + Math.sin(t * 0.8) * 0.3 + Math.sin(t * 1.7) * 0.15;
+
+          composer.render();
+        }
+
+        animate();
+      }
     </script>
   </body>
 </html>
