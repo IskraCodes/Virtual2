@@ -36,7 +36,7 @@
         --blue-bright: #c8e0ff;
         --blue-glow: #5588bb;
         --chrome: #d8e4f0;
-        --black: #040810;
+        --black: #000000;
         --font-display: "Orbitron", sans-serif;
         --font-mono: "Share Tech Mono", monospace;
         --font-ui: "Chakra Petch", sans-serif;
@@ -140,8 +140,11 @@
 
       /* ============ STAR DECORATIONS ============ */
       .stars {
-        position: fixed;
-        inset: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         z-index: 1;
         pointer-events: none;
         overflow: hidden;
@@ -1807,8 +1810,6 @@
       </video>
     </div>
 
-    <!-- Star decorations -->
-    <div class="stars" id="stars"></div>
 
     <!-- Rotated side text -->
     <div class="side-text side-text--left">
@@ -1836,6 +1837,7 @@
 
     <!-- Page Content -->
     <div class="page">
+      <div class="stars" id="stars"></div>
       <!-- Hero Section -->
       <section class="hero">
         <!-- Disc + Sacred Geometry wrapper -->
@@ -3024,7 +3026,7 @@
       // ============ STAR DECORATIONS ============
       function initStars() {
         const container = document.getElementById("stars");
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 30; i++) {
           const star = document.createElement("div");
           star.className = "star";
           star.textContent = "\u2726";
@@ -3033,11 +3035,7 @@
           star.style.animationDelay = Math.random() * 5 + "s";
           star.style.animationDuration = 2 + Math.random() * 4 + "s";
           star.style.fontSize = 6 + Math.random() * 8 + "px";
-          // Mix of green and blue stars
-          star.style.color =
-            Math.random() > 0.5
-              ? "rgba(68,170,255,0.5)"
-              : "rgba(102,187,255,0.4)";
+          star.style.color = "rgba(255,255,255," + (0.3 + Math.random() * 0.4) + ")";
           container.appendChild(star);
         }
       }
