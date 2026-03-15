@@ -343,13 +343,84 @@
         filter: blur(6px);
       }
 
+      /* ---- Disc + Geometry wrapper ---- */
+      .disc-wrapper {
+        position: relative;
+        width: 920px;
+        margin-bottom: -40px;
+        overflow: visible;
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      /* ---- Sacred Geometry overlay on disc ---- */
+      .sacred-geometry {
+        position: absolute;
+        /* center of disc: left 50%, top = padding-top(60) + half disc(360) = 420px */
+        top: 420px;
+        left: 50%;
+        width: 820px;
+        height: 820px;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+        opacity: 0.35;
+        pointer-events: none;
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))
+          drop-shadow(0 0 20px rgba(200, 220, 255, 0.4));
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' seed='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        -webkit-mask-size: 800px 800px;
+        -webkit-mask-repeat: repeat;
+        mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' seed='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        mask-size: 800px 800px;
+        mask-repeat: repeat;
+        animation:
+          sacred-spin 60s linear infinite,
+          sacred-mask-drift 12s ease-in-out infinite;
+      }
+
+      .sacred-geometry svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      @keyframes sacred-spin {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      @keyframes sacred-mask-drift {
+        0% {
+          -webkit-mask-position: 0px 0px;
+          mask-position: 0px 0px;
+        }
+        25% {
+          -webkit-mask-position: 200px -100px;
+          mask-position: 200px -100px;
+        }
+        50% {
+          -webkit-mask-position: -80px 220px;
+          mask-position: -80px 220px;
+        }
+        75% {
+          -webkit-mask-position: -200px -60px;
+          mask-position: -200px -60px;
+        }
+        100% {
+          -webkit-mask-position: 0px 0px;
+          mask-position: 0px 0px;
+        }
+      }
+
       /* ---- 2D CD Disc ---- */
       .disc-container {
         position: relative;
         width: 920px;
         height: 480px;
         padding-top: 60px;
-        margin-bottom: -40px;
         z-index: 3;
         pointer-events: none;
         -webkit-mask-image: linear-gradient(
@@ -1719,13 +1790,419 @@
     <div class="page">
       <!-- Hero Section -->
       <section class="hero">
-        <!-- 2D CD Disc -->
-        <div class="disc-container fade-in stagger-1">
-          <div class="cd-disc">
-            <div class="cd-sheen"></div>
+        <!-- Disc + Sacred Geometry wrapper -->
+        <div class="disc-wrapper fade-in stagger-1">
+          <div class="disc-container">
+            <div class="cd-disc">
+              <div class="cd-sheen"></div>
+            </div>
+            <div class="lens-flare"></div>
           </div>
-          <!-- Lens flare at bottom of disc -->
-          <div class="lens-flare"></div>
+          <div class="sacred-geometry">
+          <svg
+              viewBox="-30 -30 860 860"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Outer rings -->
+              <circle
+                cx="400"
+                cy="400"
+                r="390"
+                stroke="white"
+                stroke-width="1.5"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="370"
+                stroke="white"
+                stroke-width="0.8"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="340"
+                stroke="white"
+                stroke-width="1.2"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="320"
+                stroke="white"
+                stroke-width="0.6"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="290"
+                stroke="white"
+                stroke-width="1"
+              />
+              <!-- Cardinal node circles -->
+              <circle
+                cx="400"
+                cy="10"
+                r="18"
+                stroke="white"
+                stroke-width="1.5"
+                fill="none"
+              />
+              <circle
+                cx="400"
+                cy="10"
+                r="8"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+              />
+              <circle
+                cx="400"
+                cy="790"
+                r="18"
+                stroke="white"
+                stroke-width="1.5"
+                fill="none"
+              />
+              <circle
+                cx="400"
+                cy="790"
+                r="8"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+              />
+              <circle
+                cx="10"
+                cy="400"
+                r="18"
+                stroke="white"
+                stroke-width="1.5"
+                fill="none"
+              />
+              <circle
+                cx="10"
+                cy="400"
+                r="8"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+              />
+              <circle
+                cx="790"
+                cy="400"
+                r="18"
+                stroke="white"
+                stroke-width="1.5"
+                fill="none"
+              />
+              <circle
+                cx="790"
+                cy="400"
+                r="8"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+              />
+              <!-- Diagonal node circles -->
+              <circle
+                cx="124"
+                cy="124"
+                r="14"
+                stroke="white"
+                stroke-width="1.2"
+                fill="none"
+              />
+              <circle
+                cx="124"
+                cy="124"
+                r="6"
+                stroke="white"
+                stroke-width="0.8"
+                fill="none"
+              />
+              <circle
+                cx="676"
+                cy="124"
+                r="14"
+                stroke="white"
+                stroke-width="1.2"
+                fill="none"
+              />
+              <circle
+                cx="676"
+                cy="124"
+                r="6"
+                stroke="white"
+                stroke-width="0.8"
+                fill="none"
+              />
+              <circle
+                cx="124"
+                cy="676"
+                r="14"
+                stroke="white"
+                stroke-width="1.2"
+                fill="none"
+              />
+              <circle
+                cx="124"
+                cy="676"
+                r="6"
+                stroke="white"
+                stroke-width="0.8"
+                fill="none"
+              />
+              <circle
+                cx="676"
+                cy="676"
+                r="14"
+                stroke="white"
+                stroke-width="1.2"
+                fill="none"
+              />
+              <circle
+                cx="676"
+                cy="676"
+                r="6"
+                stroke="white"
+                stroke-width="0.8"
+                fill="none"
+              />
+              <!-- Triangle (upward) -->
+              <polygon
+                points="400,130 640,550 160,550"
+                stroke="white"
+                stroke-width="1.8"
+                fill="none"
+              />
+              <!-- Triangle (downward / inverted) -->
+              <polygon
+                points="400,670 160,250 640,250"
+                stroke="white"
+                stroke-width="1.2"
+                fill="none"
+              />
+              <!-- Inner diamond -->
+              <polygon
+                points="400,190 610,400 400,610 190,400"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+              />
+              <!-- Concentric inner circles (vortex) -->
+              <circle
+                cx="400"
+                cy="400"
+                r="200"
+                stroke="white"
+                stroke-width="0.8"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="180"
+                stroke="white"
+                stroke-width="0.6"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="160"
+                stroke="white"
+                stroke-width="0.6"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="140"
+                stroke="white"
+                stroke-width="0.5"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="120"
+                stroke="white"
+                stroke-width="0.5"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="100"
+                stroke="white"
+                stroke-width="0.4"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="82"
+                stroke="white"
+                stroke-width="0.4"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="66"
+                stroke="white"
+                stroke-width="0.3"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="52"
+                stroke="white"
+                stroke-width="0.3"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="40"
+                stroke="white"
+                stroke-width="0.3"
+              />
+              <circle
+                cx="400"
+                cy="400"
+                r="30"
+                stroke="white"
+                stroke-width="0.2"
+              />
+              <!-- Horizontal axis line -->
+              <line
+                x1="10"
+                y1="400"
+                x2="790"
+                y2="400"
+                stroke="white"
+                stroke-width="0.4"
+                stroke-dasharray="2,6"
+              />
+              <!-- Vertical axis line -->
+              <line
+                x1="400"
+                y1="10"
+                x2="400"
+                y2="790"
+                stroke="white"
+                stroke-width="0.4"
+                stroke-dasharray="2,6"
+              />
+              <!-- Inner triangle detail nodes -->
+              <circle
+                cx="400"
+                cy="190"
+                r="5"
+                stroke="white"
+                stroke-width="0.8"
+                fill="none"
+              />
+              <circle
+                cx="280"
+                cy="380"
+                r="5"
+                stroke="white"
+                stroke-width="0.8"
+                fill="none"
+              />
+              <circle
+                cx="520"
+                cy="380"
+                r="5"
+                stroke="white"
+                stroke-width="0.8"
+                fill="none"
+              />
+              <circle
+                cx="280"
+                cy="500"
+                r="4"
+                stroke="white"
+                stroke-width="0.6"
+                fill="none"
+              />
+              <circle
+                cx="520"
+                cy="500"
+                r="4"
+                stroke="white"
+                stroke-width="0.6"
+                fill="none"
+              />
+              <circle
+                cx="400"
+                cy="610"
+                r="5"
+                stroke="white"
+                stroke-width="0.8"
+                fill="none"
+              />
+              <!-- Cross lines through triangle intersections -->
+              <line
+                x1="280"
+                y1="250"
+                x2="520"
+                y2="250"
+                stroke="white"
+                stroke-width="0.5"
+              />
+              <line
+                x1="240"
+                y1="320"
+                x2="560"
+                y2="320"
+                stroke="white"
+                stroke-width="0.3"
+              />
+              <line
+                x1="200"
+                y1="480"
+                x2="600"
+                y2="480"
+                stroke="white"
+                stroke-width="0.3"
+              />
+              <line
+                x1="160"
+                y1="550"
+                x2="640"
+                y2="550"
+                stroke="white"
+                stroke-width="0.5"
+              />
+              <!-- Vesica piscis arcs -->
+              <ellipse
+                cx="320"
+                cy="400"
+                rx="120"
+                ry="200"
+                stroke="white"
+                stroke-width="0.4"
+                fill="none"
+                opacity="0.5"
+              />
+              <ellipse
+                cx="480"
+                cy="400"
+                rx="120"
+                ry="200"
+                stroke="white"
+                stroke-width="0.4"
+                fill="none"
+                opacity="0.5"
+              />
+              <!-- Tiny scatter dots for texture -->
+              <circle cx="340" cy="280" r="1.5" fill="white" opacity="0.4" />
+              <circle cx="460" cy="280" r="1.5" fill="white" opacity="0.4" />
+              <circle cx="310" cy="350" r="1.5" fill="white" opacity="0.4" />
+              <circle cx="490" cy="350" r="1.5" fill="white" opacity="0.4" />
+              <circle cx="350" cy="450" r="1.5" fill="white" opacity="0.4" />
+              <circle cx="450" cy="450" r="1.5" fill="white" opacity="0.4" />
+              <circle cx="330" cy="530" r="1.5" fill="white" opacity="0.4" />
+              <circle cx="470" cy="530" r="1.5" fill="white" opacity="0.4" />
+            </svg>
+          </div>
         </div>
 
         <h1 class="hero-title fade-in stagger-2">
