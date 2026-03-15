@@ -20,22 +20,22 @@
       }
 
       :root {
-        --green-dark: #060a18;
-        --green-bg: #0a1020;
-        --green-panel: #0e1830;
-        --green-mid: #142040;
-        --green-border: #1e3a6e;
-        --green-accent: #a0ccee;
-        --green-bright: #d4eaff;
-        --green-glow: #88bbee;
-        --green-text: #c0d8f0;
-        --green-dim: #4a6a90;
-        --yellow-highlight: #e0f0ff;
-        --yellow-bg: #b8d8f8;
-        --blue-accent: #90c0e8;
-        --blue-bright: #c8e0ff;
-        --blue-glow: #5588bb;
-        --chrome: #d8e4f0;
+        --green-dark: #0a0618;
+        --green-bg: #100a20;
+        --green-panel: #180e30;
+        --green-mid: #201440;
+        --green-border: #3a1e6e;
+        --green-accent: #bca0ee;
+        --green-bright: #dcc4ff;
+        --green-glow: #aa88ee;
+        --green-text: #d0c0f0;
+        --green-dim: #6a4a90;
+        --yellow-highlight: #e8d0ff;
+        --yellow-bg: #d0b0f8;
+        --blue-accent: #b090e8;
+        --blue-bright: #d8c0ff;
+        --blue-glow: #7755bb;
+        --chrome: #e0d4f0;
         --black: #000000;
         --font-display: "Orbitron", sans-serif;
         --font-mono: "Share Tech Mono", monospace;
@@ -127,7 +127,7 @@
         top: 50%;
         transform: rotate(-90deg) translateX(-50%);
         transform-origin: left center;
-        color: rgba(68, 136, 204, 0.25);
+        color: rgba(136, 68, 204, 0.25);
       }
 
       .side-text--right {
@@ -179,8 +179,8 @@
         height: 44px;
         background: linear-gradient(
           180deg,
-          rgba(8, 16, 32, 0.95) 0%,
-          rgba(8, 14, 28, 0.85) 100%
+          rgba(16, 8, 32, 0.95) 0%,
+          rgba(14, 8, 28, 0.85) 100%
         );
         border-bottom: 1px solid var(--green-border);
         display: flex;
@@ -197,7 +197,7 @@
         font-weight: 700;
         color: var(--green-bright);
         letter-spacing: 3px;
-        text-shadow: 0 0 12px rgba(68, 170, 255, 0.4);
+        text-shadow: 0 0 12px rgba(170, 68, 255, 0.4);
       }
 
       .hud-bar__ticks {
@@ -266,12 +266,12 @@
         z-index: 1;
         background: radial-gradient(
             ellipse at center,
-            rgba(68, 136, 204, 0.08) 0%,
+            rgba(136, 68, 204, 0.08) 0%,
             transparent 50%
           ),
           radial-gradient(
             ellipse at center,
-            rgba(68, 170, 255, 0.05) 0%,
+            rgba(170, 68, 255, 0.05) 0%,
             transparent 40%
           );
         pointer-events: none;
@@ -312,13 +312,13 @@
         background: linear-gradient(
           90deg,
           transparent 0%,
-          rgba(102, 187, 255, 0) 15%,
-          rgba(102, 187, 255, 0.15) 30%,
+          rgba(187, 102, 255, 0) 15%,
+          rgba(187, 102, 255, 0.15) 30%,
           rgba(255, 255, 255, 0.5) 48%,
           rgba(255, 255, 255, 0.8) 50%,
           rgba(255, 255, 255, 0.5) 52%,
-          rgba(102, 187, 255, 0.15) 70%,
-          rgba(102, 187, 255, 0) 85%,
+          rgba(187, 102, 255, 0.15) 70%,
+          rgba(187, 102, 255, 0) 85%,
           transparent 100%
         );
         filter: blur(1px);
@@ -335,11 +335,11 @@
           90deg,
           transparent 0%,
           transparent 20%,
-          rgba(68, 170, 255, 0.04) 35%,
+          rgba(170, 68, 255, 0.04) 35%,
           rgba(255, 255, 255, 0.12) 49%,
           rgba(255, 255, 255, 0.15) 50%,
           rgba(255, 255, 255, 0.12) 51%,
-          rgba(68, 136, 204, 0.04) 65%,
+          rgba(136, 68, 204, 0.04) 65%,
           transparent 80%,
           transparent 100%
         );
@@ -408,7 +408,7 @@
         opacity: 0.35;
         pointer-events: none;
         filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))
-          drop-shadow(0 0 20px rgba(200, 220, 255, 0.4));
+          drop-shadow(0 0 20px rgba(220, 200, 255, 0.4));
         -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' seed='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         -webkit-mask-size: 800px 800px;
         -webkit-mask-repeat: repeat;
@@ -488,38 +488,38 @@
         margin: 0 auto;
         background: conic-gradient(
             from 0deg,
-            rgba(160, 200, 240, 0.15) 0deg,
-            rgba(100, 160, 220, 0.05) 30deg,
-            rgba(180, 210, 250, 0.2) 60deg,
-            rgba(90, 140, 200, 0.05) 90deg,
-            rgba(200, 220, 255, 0.18) 120deg,
-            rgba(100, 160, 220, 0.05) 150deg,
-            rgba(160, 200, 240, 0.15) 180deg,
-            rgba(100, 160, 220, 0.05) 210deg,
-            rgba(180, 210, 250, 0.2) 240deg,
-            rgba(90, 140, 200, 0.05) 270deg,
-            rgba(200, 220, 255, 0.18) 300deg,
-            rgba(100, 160, 220, 0.05) 330deg,
-            rgba(160, 200, 240, 0.15) 360deg
+            rgba(200, 160, 240, 0.15) 0deg,
+            rgba(160, 100, 220, 0.05) 30deg,
+            rgba(210, 180, 250, 0.2) 60deg,
+            rgba(140, 90, 200, 0.05) 90deg,
+            rgba(220, 200, 255, 0.18) 120deg,
+            rgba(160, 100, 220, 0.05) 150deg,
+            rgba(200, 160, 240, 0.15) 180deg,
+            rgba(160, 100, 220, 0.05) 210deg,
+            rgba(210, 180, 250, 0.2) 240deg,
+            rgba(140, 90, 200, 0.05) 270deg,
+            rgba(220, 200, 255, 0.18) 300deg,
+            rgba(160, 100, 220, 0.05) 330deg,
+            rgba(200, 160, 240, 0.15) 360deg
           ),
           radial-gradient(
             circle at 50% 50%,
             transparent 14%,
-            #1a2a4a 14.5%,
-            #0e1830 22%,
-            #1e3a6e 23%,
-            #88bbee 24%,
-            #6699cc 30%,
-            #4a7aaa 50%,
-            #88aacc 70%,
-            #a0c0dd 85%,
-            #6688aa 95%,
-            #3a5a7a 100%
+            #2a1a4a 14.5%,
+            #1e0e30 22%,
+            #3a1e6e 23%,
+            #bb88ee 24%,
+            #9966cc 30%,
+            #7a4aaa 50%,
+            #aa88cc 70%,
+            #c0a0dd 85%,
+            #8866aa 95%,
+            #5a3a7a 100%
           );
         box-shadow:
-          0 0 40px rgba(100, 160, 220, 0.3),
-          0 0 80px rgba(80, 140, 200, 0.15),
-          inset 0 0 30px rgba(100, 160, 220, 0.1);
+          0 0 40px rgba(160, 100, 220, 0.3),
+          0 0 80px rgba(140, 80, 200, 0.15),
+          inset 0 0 30px rgba(160, 100, 220, 0.1);
         animation: cd-spin 8s linear infinite;
       }
 
@@ -536,7 +536,7 @@
         background: var(--black);
         box-shadow:
           0 0 4px rgba(0, 0, 0, 0.8),
-          0 0 1px 1px rgba(100, 160, 220, 0.3);
+          0 0 1px 1px rgba(160, 100, 220, 0.3);
         z-index: 2;
       }
 
@@ -621,7 +621,7 @@
         text-transform: uppercase;
         position: relative;
         -webkit-text-stroke: 1.5px var(--green-bright);
-        text-shadow: 0 0 40px rgba(68, 170, 255, 0.2);
+        text-shadow: 0 0 40px rgba(170, 68, 255, 0.2);
         margin-bottom: 4px;
       }
 
@@ -660,8 +660,8 @@
       .xbox-panel {
         background: linear-gradient(
           135deg,
-          rgba(14, 24, 48, 0.92) 0%,
-          rgba(10, 18, 36, 0.95) 100%
+          rgba(24, 14, 48, 0.92) 0%,
+          rgba(18, 10, 36, 0.95) 100%
         );
         border: 2px solid var(--green-border);
         border-radius: 4px;
@@ -689,7 +689,7 @@
         content: "";
         position: absolute;
         inset: 3px;
-        border: 1px solid rgba(30, 60, 120, 0.3);
+        border: 1px solid rgba(60, 30, 120, 0.3);
         border-radius: 2px;
         pointer-events: none;
       }
@@ -702,8 +702,8 @@
       }
 
       .stat-box {
-        background: rgba(10, 18, 36, 0.8);
-        border: 1px solid rgba(30, 60, 120, 0.2);
+        background: rgba(18, 10, 36, 0.8);
+        border: 1px solid rgba(60, 30, 120, 0.2);
         padding: 16px 12px;
         text-align: center;
         position: relative;
@@ -726,7 +726,7 @@
         font-size: 29px;
         font-weight: 700;
         color: var(--green-bright);
-        text-shadow: 0 0 8px rgba(68, 170, 255, 0.3);
+        text-shadow: 0 0 8px rgba(170, 68, 255, 0.3);
       }
 
       .stat-box__label {
@@ -760,14 +760,14 @@
         cursor: pointer;
         position: relative;
         transition: all 0.2s;
-        text-shadow: 0 0 8px rgba(68, 170, 255, 0.3);
+        text-shadow: 0 0 8px rgba(170, 68, 255, 0.3);
       }
 
       .xbox-btn::before {
         content: "";
         position: absolute;
         inset: -4px;
-        border: 1px solid rgba(68, 170, 255, 0.1);
+        border: 1px solid rgba(170, 68, 255, 0.1);
         pointer-events: none;
         transition: border-color 0.2s;
       }
@@ -777,11 +777,11 @@
         color: var(--black);
         border-color: var(--yellow-highlight);
         text-shadow: none;
-        box-shadow: 0 0 20px rgba(100, 200, 255, 0.3);
+        box-shadow: 0 0 20px rgba(200, 100, 255, 0.3);
       }
 
       .xbox-btn:hover::before {
-        border-color: rgba(100, 200, 255, 0.2);
+        border-color: rgba(200, 100, 255, 0.2);
       }
 
       .xbox-btn--primary {
@@ -793,7 +793,7 @@
       .xbox-btn--primary:hover {
         background: var(--yellow-highlight);
         border-color: var(--yellow-highlight);
-        box-shadow: 0 0 30px rgba(100, 200, 255, 0.4);
+        box-shadow: 0 0 30px rgba(200, 100, 255, 0.4);
       }
 
       /* ============ MAIN DASHBOARD ============ */
@@ -816,7 +816,7 @@
         display: flex;
         justify-content: space-between;
         padding: 8px 0;
-        border-bottom: 1px solid rgba(30, 60, 120, 0.3);
+        border-bottom: 1px solid rgba(60, 30, 120, 0.3);
         font-family: var(--font-mono);
         font-size: 13px;
       }
@@ -873,10 +873,10 @@
         padding: 12px 16px;
         font-family: var(--font-mono);
         font-size: 11px;
-        color: rgba(68, 136, 204, 0.3);
+        color: rgba(136, 68, 204, 0.3);
         letter-spacing: 2px;
         line-height: 1.8;
-        border-top: 1px solid rgba(68, 136, 204, 0.1);
+        border-top: 1px solid rgba(136, 68, 204, 0.1);
       }
 
       .circuit-trace::before {
@@ -888,7 +888,7 @@
         height: 100%;
         background: linear-gradient(
           180deg,
-          rgba(68, 136, 204, 0.2),
+          rgba(136, 68, 204, 0.2),
           transparent
         );
       }
@@ -920,8 +920,8 @@
         font-size: 16px;
         font-weight: 600;
         color: var(--green-text);
-        background: rgba(14, 24, 48, 0.6);
-        border: 1px solid rgba(30, 60, 120, 0.2);
+        background: rgba(24, 14, 48, 0.6);
+        border: 1px solid rgba(60, 30, 120, 0.2);
         border-bottom: 3px solid transparent;
         cursor: pointer;
         transition: all 0.15s;
@@ -931,9 +931,9 @@
       }
 
       .xbox-menu__item:hover {
-        background: rgba(30, 60, 120, 0.3);
+        background: rgba(60, 30, 120, 0.3);
         border-bottom-color: var(--green-accent);
-        color: #c0d8ff;
+        color: #d8c0ff;
       }
 
       .xbox-menu__item--active {
@@ -969,7 +969,7 @@
         padding: 16px 20px;
         border-bottom: 1px solid var(--green-border);
         text-transform: uppercase;
-        text-shadow: 0 0 12px rgba(68, 170, 255, 0.3);
+        text-shadow: 0 0 12px rgba(170, 68, 255, 0.3);
         position: relative;
       }
 
@@ -1001,8 +1001,8 @@
         align-items: center;
         gap: 16px;
         padding: 12px 16px;
-        background: rgba(10, 18, 36, 0.7);
-        border: 1px solid rgba(30, 60, 120, 0.15);
+        background: rgba(18, 10, 36, 0.7);
+        border: 1px solid rgba(60, 30, 120, 0.15);
         border-radius: 2px;
         cursor: pointer;
         transition: all 0.15s;
@@ -1010,12 +1010,12 @@
       }
 
       .sample-item:hover {
-        background: rgba(30, 60, 120, 0.25);
+        background: rgba(60, 30, 120, 0.25);
         border-color: var(--green-accent);
       }
 
       .sample-item--playing {
-        background: rgba(30, 60, 120, 0.35) !important;
+        background: rgba(60, 30, 120, 0.35) !important;
         border-color: var(--green-bright) !important;
       }
 
@@ -1147,8 +1147,8 @@
       .feature-card {
         background: linear-gradient(
           135deg,
-          rgba(14, 24, 48, 0.85),
-          rgba(10, 18, 36, 0.9)
+          rgba(24, 14, 48, 0.85),
+          rgba(18, 10, 36, 0.9)
         );
         border: 1px solid var(--green-border);
         border-radius: 4px;
@@ -1192,7 +1192,7 @@
         font-weight: 900;
         color: var(--green-bright);
         margin-bottom: 12px;
-        text-shadow: 0 0 20px rgba(68, 170, 255, 0.2);
+        text-shadow: 0 0 20px rgba(170, 68, 255, 0.2);
       }
 
       .feature-card__name {
@@ -1239,8 +1239,8 @@
       }
 
       .testimonial {
-        background: rgba(14, 24, 48, 0.6);
-        border: 1px solid rgba(30, 60, 120, 0.2);
+        background: rgba(24, 14, 48, 0.6);
+        border: 1px solid rgba(60, 30, 120, 0.2);
         border-radius: 4px;
         padding: 20px;
         position: relative;
@@ -1295,7 +1295,7 @@
         inset: 0;
         background: radial-gradient(
           ellipse at center,
-          rgba(68, 136, 204, 0.06) 0%,
+          rgba(136, 68, 204, 0.06) 0%,
           transparent 60%
         );
         pointer-events: none;
@@ -1332,11 +1332,11 @@
       }
 
       .credits-inner {
-        border: 1px solid rgba(68, 136, 204, 0.15);
+        border: 1px solid rgba(136, 68, 204, 0.15);
         background: linear-gradient(
           135deg,
-          rgba(8, 14, 28, 0.6),
-          rgba(4, 8, 16, 0.8)
+          rgba(14, 8, 28, 0.6),
+          rgba(8, 4, 16, 0.8)
         );
         padding: 24px 32px;
         position: relative;
@@ -1366,7 +1366,7 @@
         left: 12px;
         font-family: var(--font-mono);
         font-size: 10px;
-        color: rgba(68, 136, 204, 0.3);
+        color: rgba(136, 68, 204, 0.3);
         letter-spacing: 3px;
       }
 
@@ -1402,8 +1402,8 @@
         height: 24px;
         overflow: hidden;
         z-index: 99;
-        border-top: 1px solid rgba(30, 60, 120, 0.3);
-        background: rgba(4, 8, 16, 0.8);
+        border-top: 1px solid rgba(60, 30, 120, 0.3);
+        background: rgba(8, 4, 16, 0.8);
         backdrop-filter: blur(4px);
       }
 
@@ -1435,8 +1435,8 @@
         transform: translateX(-50%);
         background: linear-gradient(
           135deg,
-          rgba(14, 24, 48, 0.95),
-          rgba(10, 18, 36, 0.98)
+          rgba(24, 14, 48, 0.95),
+          rgba(18, 10, 36, 0.98)
         );
         border: 2px solid var(--green-border);
         border-radius: 4px;
@@ -1446,7 +1446,7 @@
         gap: 16px;
         z-index: 101;
         min-width: 400px;
-        box-shadow: 0 0 30px rgba(50, 120, 200, 0.15);
+        box-shadow: 0 0 30px rgba(120, 50, 200, 0.15);
       }
 
       .player-bar.active {
@@ -1559,7 +1559,7 @@
         min-width: 140px;
         padding: 10px 16px;
         border-bottom: none;
-        border-right: 1px solid rgba(30, 60, 120, 0.3);
+        border-right: 1px solid rgba(60, 30, 120, 0.3);
       }
 
       .info-bar .info-row:last-child {
@@ -1719,7 +1719,7 @@
         }
         .info-bar .info-row {
           border-right: none;
-          border-bottom: 1px solid rgba(30, 60, 120, 0.3);
+          border-bottom: 1px solid rgba(60, 30, 120, 0.3);
         }
         .disc-wrapper {
           transform: scale(0.38);
@@ -1789,8 +1789,6 @@
     </style>
   </head>
   <body>
-    <!-- Background Canvas -->
-    <canvas id="bgCanvas"></canvas>
 
     <!-- Overlays -->
     <div class="scanlines"></div>
@@ -1836,6 +1834,7 @@
     </div>
 
     <!-- Page Content -->
+    <canvas id="bgCanvas"></canvas>
     <div class="page">
       <div class="stars" id="stars"></div>
       <!-- Hero Section -->
@@ -2572,7 +2571,7 @@
               required
               style="
                 padding: 10px 14px;
-                background: rgba(14, 24, 48, 0.8);
+                background: rgba(24, 14, 48, 0.8);
                 border: 1px solid var(--green-border);
                 color: var(--green-text);
                 font-family: var(--font-mono);
@@ -2588,7 +2587,7 @@
               required
               style="
                 padding: 10px 14px;
-                background: rgba(14, 24, 48, 0.8);
+                background: rgba(24, 14, 48, 0.8);
                 border: 1px solid var(--green-border);
                 color: var(--green-text);
                 font-family: var(--font-mono);
@@ -3078,7 +3077,7 @@
             h * 0.4,
             w * 0.7,
           );
-          g1.addColorStop(0, "rgba(15,30,60,0.12)");
+          g1.addColorStop(0, "rgba(30,15,60,0.12)");
           g1.addColorStop(1, "transparent");
           ctx.fillStyle = g1;
           ctx.fillRect(0, 0, w, h);
@@ -3091,14 +3090,19 @@
             h * 0.6,
             w * 0.5,
           );
-          g2.addColorStop(0, "rgba(20,40,80,0.06)");
+          g2.addColorStop(0, "rgba(40,20,80,0.06)");
           g2.addColorStop(1, "transparent");
           ctx.fillStyle = g2;
           ctx.fillRect(0, 0, w, h);
 
+          // Scroll offset — particles move with page
+          const scrollY = window.scrollY || window.pageYOffset;
+          ctx.save();
+          ctx.translate(0, -scrollY * 0.8);
+
           // Grid
           const spacing = 60;
-          ctx.strokeStyle = "rgba(30,60,120,0.035)";
+          ctx.strokeStyle = "rgba(60,30,120,0.035)";
           ctx.lineWidth = 1;
           for (let x = 0; x < w; x += spacing) {
             ctx.beginPath();
@@ -3114,7 +3118,7 @@
           }
 
           // Grid dots
-          ctx.fillStyle = "rgba(30,60,120,0.08)";
+          ctx.fillStyle = "rgba(60,30,120,0.08)";
           for (let x = 0; x < w; x += spacing) {
             for (let y = 0; y < h; y += spacing) {
               ctx.fillRect(x, y, 1, 1);
@@ -3122,7 +3126,7 @@
           }
 
           // Circuit board traces (horizontal lines with right-angle turns)
-          ctx.strokeStyle = "rgba(68,136,204,0.03)";
+          ctx.strokeStyle = "rgba(136,68,204,0.03)";
           ctx.lineWidth = 1;
           const traceY = [h * 0.2, h * 0.4, h * 0.6, h * 0.8];
           for (const ty of traceY) {
@@ -3135,7 +3139,7 @@
             ctx.lineTo(w, ty);
             ctx.stroke();
             // Nodes at junctions
-            ctx.fillStyle = "rgba(68,136,204,0.06)";
+            ctx.fillStyle = "rgba(136,68,204,0.06)";
             ctx.beginPath();
             ctx.arc(w * 0.3, ty, 2, 0, Math.PI * 2);
             ctx.fill();
@@ -3156,8 +3160,8 @@
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
             ctx.fillStyle = p.blue
-              ? "rgba(102,187,255,0.12)"
-              : "rgba(68,170,255,0.12)";
+              ? "rgba(187,102,255,0.12)"
+              : "rgba(170,68,255,0.12)";
             ctx.fill();
           }
 
@@ -3173,14 +3177,15 @@
                 ctx.lineTo(particles[j].x, particles[j].y);
                 const mixed = particles[i].blue || particles[j].blue;
                 ctx.strokeStyle = mixed
-                  ? `rgba(68,136,204,${0.06 * (1 - d2 / 14400)})`
-                  : `rgba(50,120,200,${0.06 * (1 - d2 / 14400)})`;
+                  ? `rgba(136,68,204,${0.06 * (1 - d2 / 14400)})`
+                  : `rgba(120,50,200,${0.06 * (1 - d2 / 14400)})`;
                 ctx.lineWidth = 0.5;
                 ctx.stroke();
               }
             }
           }
 
+          ctx.restore();
           requestAnimationFrame(draw);
         }
 
@@ -3425,7 +3430,7 @@
           const clampedIntensity = Math.min(Math.max(0.05, 1.0 / Math.max(speedRatio, 0.1)), 3.0);
 
           ctx.clearRect(0, 0, w, h);
-          ctx.fillStyle = "rgba(8,12,24,0.95)";
+          ctx.fillStyle = "rgba(12,8,24,0.95)";
           ctx.fillRect(0, 0, w, h);
 
           const pad = 30;
@@ -3437,10 +3442,10 @@
           const gridStep = graphW * 0.1;
 
           // Bounding box + grid in one batch
-          ctx.strokeStyle = "rgba(80,180,220,0.12)";
+          ctx.strokeStyle = "rgba(150,80,220,0.12)";
           ctx.lineWidth = 1;
           ctx.strokeRect(pad, pad, graphW, graphH);
-          ctx.strokeStyle = "rgba(80,180,220,0.04)";
+          ctx.strokeStyle = "rgba(150,80,220,0.04)";
           ctx.lineWidth = 0.5;
           ctx.beginPath();
           for (let gx = 0; gx < 10; gx++) {
@@ -3455,7 +3460,7 @@
           if (sweepX > 0.8 || sweepX < 0.2) sweepXDir *= -1;
           sweepY += sweepYDir;
           if (sweepY > 0.75 || sweepY < 0.25) sweepYDir *= -1;
-          ctx.strokeStyle = "rgba(60,140,255,0.2)";
+          ctx.strokeStyle = "rgba(140,60,255,0.2)";
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(pad + graphW * sweepX, pad);
@@ -3613,27 +3618,27 @@
 
 
         // Lighting — dramatic rim/backlight
-        const ambientLight = new THREE.AmbientLight(0x334466, 0.4);
+        const ambientLight = new THREE.AmbientLight(0x443366, 0.4);
         scene.add(ambientLight);
 
-        const rimLight = new THREE.DirectionalLight(0x88bbff, 2.5);
+        const rimLight = new THREE.DirectionalLight(0xbb88ff, 2.5);
         rimLight.position.set(-2, 1, -2);
         scene.add(rimLight);
 
-        const keyLight = new THREE.DirectionalLight(0xddeeff, 1.8);
+        const keyLight = new THREE.DirectionalLight(0xeeddff, 1.8);
         keyLight.position.set(2, 2, 3);
         scene.add(keyLight);
 
-        const fillLight = new THREE.DirectionalLight(0x446688, 0.8);
+        const fillLight = new THREE.DirectionalLight(0x664488, 0.8);
         fillLight.position.set(0, -2, 1);
         scene.add(fillLight);
 
         // Point lights for metallic reflections
-        const pointA = new THREE.PointLight(0x66aaff, 3, 8);
+        const pointA = new THREE.PointLight(0xaa66ff, 3, 8);
         pointA.position.set(1.5, 0.5, 1);
         scene.add(pointA);
 
-        const pointB = new THREE.PointLight(0x4488cc, 2, 8);
+        const pointB = new THREE.PointLight(0x8844cc, 2, 8);
         pointB.position.set(-1.5, -0.5, 0.5);
         scene.add(pointB);
 
@@ -3659,7 +3664,7 @@
               child.material.roughness = 0.15;
               child.material.envMapIntensity = 1.5;
               if (child.material.color) {
-                child.material.color.lerp(new THREE.Color(0xaaccee), 0.2);
+                child.material.color.lerp(new THREE.Color(0xccaaee), 0.2);
               }
             }
           });
