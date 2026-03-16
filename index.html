@@ -379,19 +379,19 @@
         transform: translate(-50%, -55%);
         z-index: 1;
         pointer-events: none;
-        opacity: 0.6;
+        opacity: 1;
         -webkit-mask-image: radial-gradient(
           ellipse at center,
           white 20%,
-          rgba(255,255,255,0.6) 40%,
-          rgba(255,255,255,0.15) 60%,
+          rgba(255, 255, 255, 0.6) 40%,
+          rgba(255, 255, 255, 0.15) 60%,
           transparent 75%
         );
         mask-image: radial-gradient(
           ellipse at center,
           white 20%,
-          rgba(255,255,255,0.6) 40%,
-          rgba(255,255,255,0.15) 60%,
+          rgba(255, 255, 255, 0.6) 40%,
+          rgba(255, 255, 255, 0.15) 60%,
           transparent 75%
         );
       }
@@ -647,12 +647,12 @@
 
       .hero-tagline {
         font-family: var(--font-mono);
-        font-size: 13px;
+        font-size: 11px;
         color: var(--green-dim);
         text-align: center;
-        letter-spacing: 3px;
+        letter-spacing: 2px;
         margin-bottom: 40px;
-        max-width: 520px;
+        max-width: 700px;
         line-height: 1.8;
       }
 
@@ -1789,7 +1789,6 @@
     </style>
   </head>
   <body>
-
     <!-- Overlays -->
     <div class="scanlines"></div>
     <div class="grain"></div>
@@ -1807,7 +1806,6 @@
         <source src="IMG_4964 (2).webm" type="video/webm" />
       </video>
     </div>
-
 
     <!-- Rotated side text -->
     <div class="side-text side-text--left">
@@ -3034,7 +3032,8 @@
           star.style.animationDelay = Math.random() * 5 + "s";
           star.style.animationDuration = 2 + Math.random() * 4 + "s";
           star.style.fontSize = 6 + Math.random() * 8 + "px";
-          star.style.color = "rgba(255,255,255," + (0.3 + Math.random() * 0.4) + ")";
+          star.style.color =
+            "rgba(255,255,255," + (0.3 + Math.random() * 0.4) + ")";
           container.appendChild(star);
         }
       }
@@ -3337,39 +3336,54 @@
           return x - Math.floor(x);
         }
 
-        function noise2(x) { // 2-octave
+        function noise2(x) {
+          // 2-octave
           let i = Math.floor(x);
-          let f = x - i; f = f * f * (3 - 2 * f);
+          let f = x - i;
+          f = f * f * (3 - 2 * f);
           let v = hash(i) * (1 - f) + hash(i + 1) * f;
           x *= 2.1;
           i = Math.floor(x);
-          f = x - i; f = f * f * (3 - 2 * f);
+          f = x - i;
+          f = f * f * (3 - 2 * f);
           v += (hash(i) * (1 - f) + hash(i + 1) * f) * 0.5;
           return v / 1.5;
         }
 
-        function noise3(x) { // 3-octave
-          let val = 0, amp = 1, freq = 1, max = 0;
+        function noise3(x) {
+          // 3-octave
+          let val = 0,
+            amp = 1,
+            freq = 1,
+            max = 0;
           for (let o = 0; o < 3; o++) {
             const xf = x * freq;
             const i = Math.floor(xf);
             const f = xf - i;
             const t = f * f * (3 - 2 * f);
             val += (hash(i) * (1 - t) + hash(i + 1) * t) * amp;
-            max += amp; amp *= 0.5; freq *= 2.1;
+            max += amp;
+            amp *= 0.5;
+            freq *= 2.1;
           }
           return val / max;
         }
 
-        function noise4(x) { // 4-octave
-          let val = 0, amp = 1, freq = 1, max = 0;
+        function noise4(x) {
+          // 4-octave
+          let val = 0,
+            amp = 1,
+            freq = 1,
+            max = 0;
           for (let o = 0; o < 4; o++) {
             const xf = x * freq;
             const i = Math.floor(xf);
             const f = xf - i;
             const t = f * f * (3 - 2 * f);
             val += (hash(i) * (1 - t) + hash(i + 1) * t) * amp;
-            max += amp; amp *= 0.5; freq *= 2.1;
+            max += amp;
+            amp *= 0.5;
+            freq *= 2.1;
           }
           return val / max;
         }
@@ -3385,7 +3399,7 @@
           const b = (200 - t * 170) | 0;
           lineColors.push({
             stroke: `rgba(${r},${g},${b},0.7)`,
-            shadow: `rgba(${r},${g},${b},0.4)`
+            shadow: `rgba(${r},${g},${b},0.4)`,
           });
         }
 
@@ -3403,13 +3417,15 @@
         for (let i = 0; i < 6; i++) {
           crosshairs.push({
             lineIdx: (Math.random() * LINE_COUNT) | 0,
-            phase: Math.random() * 200
+            phase: Math.random() * 200,
           });
         }
 
         // Sweep lines
-        let sweepX = 0.3, sweepXDir = 0.0003;
-        let sweepY = 0.4, sweepYDir = 0.00025;
+        let sweepX = 0.3,
+          sweepXDir = 0.0003;
+        let sweepY = 0.4,
+          sweepYDir = 0.00025;
 
         function resize() {
           const rect = canvas.parentElement.getBoundingClientRect();
@@ -3427,7 +3443,10 @@
           const scrollOffset = time * BASE_SPEED;
 
           // Intensity: inverse of speed — slow = erratic, fast = flat
-          const clampedIntensity = Math.min(Math.max(0.05, 1.0 / Math.max(speedRatio, 0.1)), 3.0);
+          const clampedIntensity = Math.min(
+            Math.max(0.05, 1.0 / Math.max(speedRatio, 0.1)),
+            3.0,
+          );
 
           ctx.clearRect(0, 0, w, h);
           ctx.fillStyle = "rgba(12,8,24,0.95)";
@@ -3472,7 +3491,8 @@
           // Pre-compute crosshair target pixel positions (once per frame)
           const chTargets = new Int32Array(crosshairs.length);
           for (let ci = 0; ci < crosshairs.length; ci++) {
-            const chX = (((crosshairs[ci].phase - scrollOffset) % 1.0) + 1.0) % 1.0;
+            const chX =
+              (((crosshairs[ci].phase - scrollOffset) % 1.0) + 1.0) % 1.0;
             chTargets[ci] = (chX * graphW + 0.5) | 0;
           }
 
@@ -3514,7 +3534,8 @@
               const n4 = Math.sin(scrolledX * 55 + time * 7 + seed * 0.4) * 0.2;
               const centerDist = (n1 - 0.5) * 2.2 + (n2 - 0.5) * 1.4 + n3 + n4;
 
-              const dy = (base + centerDist * envelope) * clampedIntensity * amp;
+              const dy =
+                (base + centerDist * envelope) * clampedIntensity * amp;
               const x = pad + px;
               const y = baseY + dy;
 
@@ -3569,27 +3590,27 @@
 
     <!-- Three.js for 3D metalheart model -->
     <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
       }
-    }
     </script>
     <script type="module">
-      import * as THREE from 'three';
-      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-      import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-      import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-      import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+      import * as THREE from "three";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+      import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+      import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+      import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 
-      const canvas = document.getElementById('metalheartCanvas');
+      const canvas = document.getElementById("metalheartCanvas");
       if (canvas) {
         const renderer = new THREE.WebGLRenderer({
           canvas,
           alpha: true,
           antialias: true,
-          powerPreference: 'high-performance'
+          powerPreference: "high-performance",
         });
         const CANVAS_SIZE = 1400;
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
@@ -3610,12 +3631,11 @@
         composer.addPass(new RenderPass(scene, camera));
         const bloomPass = new UnrealBloomPass(
           new THREE.Vector2(CANVAS_SIZE, CANVAS_SIZE),
-          0.8,   // strength
-          0.4,   // radius
-          0.3    // threshold
+          0.8, // strength
+          0.4, // radius
+          0.3, // threshold
         );
         composer.addPass(bloomPass);
-
 
         // Lighting — dramatic rim/backlight
         const ambientLight = new THREE.AmbientLight(0x443366, 0.4);
@@ -3645,7 +3665,7 @@
         let model = null;
 
         const loader = new GLTFLoader();
-        loader.load('metalheart.glb', (gltf) => {
+        loader.load("metalheart.glb", (gltf) => {
           model = gltf.scene;
 
           // Center and scale the model
@@ -3700,7 +3720,8 @@
           pointB.position.y = Math.sin(t * 0.3) * 1.5;
 
           // Pulsing bloom
-          bloomPass.strength = 0.8 + Math.sin(t * 0.8) * 0.3 + Math.sin(t * 1.7) * 0.15;
+          bloomPass.strength =
+            0.8 + Math.sin(t * 0.8) * 0.3 + Math.sin(t * 1.7) * 0.15;
 
           composer.render();
         }
